@@ -1,0 +1,67 @@
+<ion-view id="rescate" view-title="Rescate Carretero">
+  <ion-nav-bar class="bar bar-header bar-assertive">
+    <ion-nav-buttons side="left">
+      <!-- Toggle left side menu -->
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-back-button></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+    <form id="datos" class="list">
+      <label class="item">
+        <span class="input-label form-header">Emergencia:</span>
+        <div class="row smaller-row">
+          <div class="col"><label class="input-label">Eléctrica</label></div>
+          <div class="col">
+            <label class="toggle">
+              <input type="checkbox">
+              <div class="track">
+                 <div class="handle"></div>
+              </div>
+            </label>
+          </div>
+          <div class="col"><label class="input-label">Mecánica</label></div>
+        </div>
+      </label>
+      <label class="item item-input item-select">
+        <div class="select-container">
+          <div class="input-label">Unidad</div>
+          <select>
+            <option>Una selección larga</option>
+            <option>Blue</option>
+            <option>Green</option>
+            <option>Red</option>
+          </select>
+        </div>
+      </label>
+      <label class="item item-input">
+        <textarea class="com-input" placeholder="Comentarios"></textarea>
+      </label>
+    </form>
+    <div class="not-rescate-map" ng-if="!positionSelected">
+      <button class="button icon-right ion-ios-location button-small button-balanced" ng-click="openModal()">
+        Seleccionar ubicación
+      </button>
+    </div>
+    <div class="rescate-ubi" ng-if="positionSelected">
+      <p><strong>Ubicación:</strong> {{ubiName}}</p>
+      <button class="button icon-right ion-ios-location button-small button-balanced" ng-click="openModal()">
+        Cambiar
+      </button>
+    </div>
+    <ng-map class="rescate-map" center="{{selectedPos}}"
+      map-type-control="false" street-view-control="false"
+      geo-fallback-center="[22.153843, -100.979790]"
+      geo-callback="callbackFunc('you')"
+      draggable="false"
+      zoom-control="false"
+      ng-if="positionSelected">
+
+      <img class="marker" src="img/marker.png">
+    </ng-map>
+    <button class="button button-full button-assertive">
+      SOLICITAR RESCATE
+    </button>
+  </ion-content>
+</ion-view>

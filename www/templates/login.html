@@ -1,0 +1,19 @@
+<ion-view id="login" hide-nav-bar="true">
+  <ion-content>
+    <img src="img/logo.png" alt="" id="the-logo" class="the-logo">
+    <form ng-submit="btnClick()" role="form">
+      <div class="list">
+        <label class="item item-input">
+          <input name="email" type="email" ng-model="loginForm.email" placeholder="Correo electrónico">
+        </label>
+        <label class="item item-input">
+          <input name="password" type="password" ng-model="loginForm.password" placeholder="Contraseña">
+        </label>
+        <label class="item">
+          <button class="button tracto-btn" type="submit">Entrar</button>
+        </label>
+        <label class="item"><a href="#">¿Olvidaste tu contraseña?</a></label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

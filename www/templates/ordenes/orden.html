@@ -1,0 +1,43 @@
+<ion-view view-title="Orden">
+  <ion-nav-bar class="bar bar-header bar-dark">
+    <ion-nav-back-button side="left">
+    </ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+    <div class="card">
+      <div class="item item-divider">
+        Información General
+      </div>
+      <div class="item item-text-wrap">
+        <p>
+          <strong>Folio:</strong> SER210816-00001<br />
+          <strong>Unidad:</strong> {{order.unit.vehicle}}<br />
+          <strong>Categoría:</strong> {{order.category.name}}<br />
+          <strong>Observaciones:</strong> {{order.observations}}<br />
+          <strong>Status:</strong> {{order.status}}<br />
+          <strong>Descripción:</strong> {{order.service.description}}<br />
+          <strong>Costo:</strong> ${{order.service.cost}}<br />
+          <strong>Precio al Público:</strong> ${{order.service.public_price}}<br />
+          <strong>Tiempo de respuesta:</strong> {{order.service.response_time}}<br />
+        </p>
+      </div>
+      <div class="item item-divider">
+        Detalles de Unidad
+      </div>
+      <div class="item item-text-wrap">
+        <p>
+          <strong>Vehículo:</strong> {{order.unit.vehicle}}<br />
+          <strong>Marca:</strong> {{order.unit.brand}}<br />
+          <strong>Color:</strong> {{order.unit.colour}}<br />
+          <strong>Modelo:</strong> {{order.unit.model}}<br />
+          <strong>Año:</strong> {{order.unit.year}}<br />
+          <strong>No. Económico:</strong> {{order.unit.economic_number}}<br />
+          <strong>Placas:</strong> {{order.unit.plates}}<br />
+          <strong>No. de Serie:</strong> ${{order.unit.serial_number}}<br />
+          <strong>Carburación:</strong> {{order.unit.carburization}}<br />
+          <strong>Cilíndros:</strong> {{order.unit.cylinders}}<br />
+        </p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

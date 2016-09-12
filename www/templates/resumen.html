@@ -1,0 +1,58 @@
+<ion-view id="resumen" view-title="Resumen">
+  <ion-nav-bar class="bar bar-header bar-dark">
+    <ion-nav-buttons side="left">
+      <!-- Toggle left side menu -->
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-back-button></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+    <div class="list card">
+      <div class="item item-divider">
+        Órdenes de Servicio
+      </div>
+      <div class="item item-body">
+        <p>
+          <strong>Total de órdenes:</strong> {{ordenes.length}}<br />
+        </p>
+      </div>
+      <div class="item item-body status">
+        <h2>Status de las órdenes</h2>
+          <div class="row">
+            <div class="col-25 recepcion"></div>
+            <div class="col-75"><p><strong>Recepción de información:</strong> {{ ri.length }}</p></div>
+          </div>
+          <div class="row">
+            <div class="col-25 servicio"></div>
+            <div class="col-75"><p><strong>Servicio programado:</strong> {{ sp.length }}</p></div>
+          </div>
+          <div class="row">
+            <div class="col-25 ingreso"></div>
+            <div class="col-75"><p><strong>Ingreso de la Unidad:</strong> {{ iu.length }}</p></div>
+          </div>
+          <div class="row">
+            <div class="col-25 repara"></div>
+            <div class="col-75"><p><strong>En Reparación:</strong> {{ er.length }}</p></div>
+          </div>
+          <div class="row">
+            <div class="col-25 porfin"></div>
+            <div class="col-75"><p><strong>Por Finalizar:</strong> {{ pf.length }}</p></div>
+          </div>
+          <div class="row">
+            <div class="col-25 final"></div>
+            <div class="col-75"><p><strong>Finalizado:</strong> {{ f.length }}</p></div>
+          </div>
+          <div class="percentage-bar">
+            <div class="percentage-item recepcion-bar" style="width:{{style_ri}}%"></div>
+            <div class="percentage-item servicio-bar" style="width:{{style_sp}}%"></div>
+            <div class="percentage-item ingreso-bar" style="width:{{style_iu}}%"></div>
+            <div class="percentage-item repara-bar" style="width:{{style_er}}%"></div>
+            <div class="percentage-item porfin-bar" style="width:{{style_pf}}%"></div>
+            <div class="percentage-item final-bar" style="width:{{style_f}}%"></div>
+          </div>
+        <a class="button button-block button-assertive" href="#/app/ordenes">Ver Órdenes</a>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

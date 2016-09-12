@@ -1,0 +1,443 @@
+/* Empty. Add your own CSS if you like */
+@import 'fonts.css';
+/* GENERAL
+––––––––––––––––––––––––––––
+––––––––––––––––––––––––––––*/
+body * {
+  font-family: 'ProximaNova', Helvetica, Arial;
+}
+body,ion-side-menus,ion-nav-view.the-darkness, ion-nav-view, ion-view,ion-content{
+  background: #434343;
+  color:#fff;
+}
+.the-darkness ion-header-bar.bar-stable.bar.bar-header {
+  background: #434343;
+  box-shadow: none;
+  color:#fff;
+}
+.the-darkness .buttons .button {
+  color: white;
+}
+/* header */
+ion-nav-bar.bar.bar-header {
+    border-color: #434343;
+    background-color: #434343;
+    background-image: linear-gradient(0deg, #434343, #434343 50%, transparent 50%);
+}
+.platform-ios.platform-cordova:not(.fullscreen) ion-side-menu .has-header, .platform-ios.platform-cordova:not(.fullscreen) ion-side-menu .bar-subheader{
+  top: 64px;
+}
+.platform-ios.platform-cordova:not(.fullscreen) .has-header, .platform-ios.platform-cordova:not(.fullscreen) .bar-subheader{
+  top: 84px;
+}
+button#add-new:before{
+  font-size: 24px;
+}
+
+/* popup */
+.popup-head{
+  border-bottom: 1px solid #d8d8d8;
+}
+.popup-body{
+  color: #000;
+  text-align: center;
+}
+/* list */
+.list ion-item.item {
+  background: -webkit-linear-gradient(top, #f7f7f7 0%,#ececec 100%);
+}
+.list ion-item.item span{
+  color: #FF7600;
+  font-weight: bold;
+}
+.round-btn{
+
+}
+.absolute-btn{
+
+}
+.orange-btn{
+
+}
+
+/* ANDROID
+––––––––––––––––––––––––––––*/
+.platform-android ion-view#login .scroll {
+  margin-top: 0;
+}
+/* MENU
+––––––––––––––––––––––––––––*/
+.menu-header {
+  width: 100%;
+  height: 150px;
+  background-image: url(../img/menu-bg.jpg);
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1em;
+}
+.menu-header h1 {
+  color: white;
+  margin-bottom: 0;
+  font-size: 24px;
+}
+.menu-header h3 {
+  font-size: 17px;
+  color: white;
+  margin: 0;
+}
+.custom-list .item {
+  border: none;
+  background: none;
+}
+.custom-list a.item-content {
+  background-color: #434343;
+  color: white;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.custom-list .item-content label {
+  font-size: 17px;
+}
+.current a.item-content {
+  background: linear-gradient(to right, #363636 , #434343);
+}
+
+/* LOGIN
+––––––––––––––––––––––––––––*/
+ion-view#login .scroll {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4em;
+}
+#login img#the-logo {
+  display: flex;
+  width: 100%;
+  max-width: 220px;
+  justify-content: center;
+  align-items: center;
+  margin:2em;
+}
+#login form {
+  width: 90%;
+  max-width: 375px;
+  border: 1px solid #565656;
+  box-shadow: 0px 0px 50px #232323;
+  padding: 1.5em;
+  margin: 2em 0;
+  min-height: 215px;
+}
+#login form .item{
+  background: transparent;
+  border: none;
+  padding: .3em;
+}
+#login form .list .item input {
+  border: 1px solid #FF6000;
+  border-radius: 50px;
+  text-align: center;
+  padding: 1.1em 1em 1em;
+  font-size: 17px;
+  line-height: 27px;
+  color: white;
+}
+#login button.button.tracto-btn {
+  color: white;
+  background: #FF6000;
+  margin: 1em auto 0;
+  display: block;
+  min-height: 30px;
+  padding: 0 2em;
+  font-size: 15px;
+  line-height: 25px;
+}
+#login form label{
+  font-size:15px;
+  color:#AFAFAF;
+  text-align: center;
+}
+#login form .item a{
+  text-decoration: none;
+  color:#AFAFAF;
+}
+/* RESUMEN
+––––––––––––––––––––––––––––*/
+#resumen .item.item-body p,#resumen .item.item-body h2{
+  margin-top: 0;
+}
+#resumen .status .col-25 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .2em;
+}
+#resumen .status .col-25:after {
+  content: '';
+  display: flex;
+  width: 50%;
+  height: 100%;
+}
+.status .percentage-bar{
+  width: 100%;
+  height: 20px;
+  background: #eee;
+  margin: 1em 0;
+}
+.status .percentage-item {height:100%}
+.status .recepcion-bar,.status .recepcion:after{background: #FD2727}
+.status .servicio-bar,.status .servicio:after{background: #F58B10}
+.status .ingreso-bar,.status .ingreso:after{background: #FFC810}
+.status .repara-bar,.status .repara:after{background: #DAFD15}
+.status .porfin-bar,.status .porfin:after{background: #9EE31C}
+.status .final-bar,.status .final:after{background: #0FBE15}
+
+/* ORDENES
+––––––––––––––––––––––––––––*/
+
+
+#ordenes .list ion-item.item{
+  padding: 0;
+  text-align: center;
+}
+#ordenes a.item-content {
+  padding: 0;
+  text-align: center;
+}
+#ordenes .list ion-item.item p{
+  color: #474747;
+  font-size: 16px;
+  white-space: normal;
+}
+#ordenes .l-1.row, #ordenes .l-2.row {
+  width: 95%;
+  margin: auto;
+  border-bottom: 1px solid #fff;
+}
+#ordenes  .l-2 p{
+  font-weight: bold;
+}
+#ordenes .l-3{
+  padding:0;
+  position:relative;
+}
+#ordenes .status-bar{
+  padding:0;
+  height:45px;
+  position:relative;
+}
+#ordenes .status-bar p {
+  margin-top: 1em;
+}
+#ordenes .status-bar:before{
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  height: 40px;
+  z-index: -1;
+  opacity: .2;
+}
+#ordenes .status-bar:after{
+  content: '';
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  height: 5px;
+}
+.status-bar.recepcion-status:before, .status-bar.recepcion-status:after{background: #FD2727; width:10%}
+.status-bar.servicio-status:before, .status-bar.servicio-status:after{background: #F58B10; width:30%}
+.status-bar.ingreso-status:before, .status-bar.ingreso-status:after{background: #FFC810; width:50%}
+.status-bar.repara-status:before, .status-bar.repara-status:after{background: #DAFD15; width:70%}
+.status-bar.porfin-status:before, .status-bar.porfin-status:after{background: #9EE31C; width:85%}
+.status-bar.final-status:before, .status-bar.final-status:after{background: #0FBE15; width:100%}
+
+/* UNIDADES
+––––––––––––––––––––––––––––*/
+#unidades ion-item.item {
+  padding: .5em;
+}
+#unidades .list ion-item.item span.no-econ {
+  color: #444;
+  font-weight: bold;
+}
+/* RESCATE
+––––––––––––––––––––––––––––*/
+#rescate .bar-assertive, #rescate .button-assertive,
+#rescate-modal .bar-assertive, #rescate-modal .button-assertive{
+  border-color: #B90017;
+  background-color: #B90017;
+  background-image: linear-gradient(0deg, #B90017, #B90017 50%, transparent 50%);
+}
+#rescate .button-assertive, #rescate-modal .button-assertive{
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  padding: .5em;
+  height: 13%;
+}
+#rescate-modal .button-assertive{
+  font-size: 20px;
+}
+#rescate .scroll, #rescate-modal .scroll{
+  height:100%;
+}
+#rescate #datos {
+  background: #FF6000;
+  margin-bottom: 0px;
+  padding: 1em 1em .3em;
+  height: 40%;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+#rescate #datos .toggle input:checked + .track {
+  border-color: #4cb8d9;
+  background-color: #4cb8d9;
+}
+#rescate #datos .toggle input + .track {
+  border-color: #4cd964;
+  background-color: #4cd964;
+}
+#rescate #datos .input-label {
+  color: white;
+}
+#rescate #datos .item {
+  background: transparent;
+  color: white;
+  padding: 0;
+  border: none;
+  /*border-bottom: 1px solid #d04e00;*/
+}
+#rescate #datos .item:nth-last-child(1){
+  border-bottom: none;
+}
+#rescate #datos .form-header{
+  text-align: center;
+  font-weight: 600;
+  margin: auto;
+  font-size: 18px;
+  padding: 0;
+}
+#rescate .smaller-row {
+  width: 100%;
+  max-width: 250px;
+  margin: auto;
+  padding: 0;
+}
+#rescate #datos .col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+#rescate #datos .smaller-row .col .input-label{
+  font-size: 17px;
+  padding: .3em 0;
+  margin: 0;
+}
+#rescate #datos .select-container {
+  background: white;
+  width: 100%;
+  overflow: hidden;
+  padding: .5em 1em;
+  position:   relative;
+}
+#rescate #datos .select-container, #rescate #datos textarea.com-input,
+#rescate #datos input.ubi-input {
+  margin: 3% 0;
+}
+#rescate #datos .select-container .input-label{
+  width:25%;
+}
+#rescate #datos .select-container select {
+  width: 75%;
+  right: 30px;
+}
+#rescate #datos .select-container .input-label,
+#rescate #datos .select-container select {
+  padding: 0;
+  margin: 0;
+  color: #aaa;
+}
+#rescate #datos textarea.com-input {
+  height: 50px;
+}
+#rescate #datos .select-container,#rescate #datos .com-input,#rescate #datos .ubi-input {
+  background: white;
+  padding: .5em 1em;
+  border: 1px solid #B90017;
+  box-shadow: 0px 3px 5px #b34300;
+  font-size: 17px;
+}
+.not-rescate-map {
+  padding: 1.5em 1em;
+  height: 47%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  background-image: url(../img/map-bg.jpg);
+  background-size: cover;
+  background-origin: initial;
+  background-position: center;
+}
+#rescate .not-rescate-map .button {
+  width: 230px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0px 2px 5px #777;
+  padding: 2px 1em 1px;
+}
+#rescate .rescate-map {
+  width: 100%;
+  height: 37%;
+  position: relative;
+}
+#rescate-modal .has-header{
+  top:88px;
+}
+#rescate-modal .rescate-map {
+  width: 100%;
+  height: 87%;
+  position: relative;
+}
+#rescate-modal img.marker, #rescate img.marker {
+  position: absolute;
+  z-index: 9;
+  width: 40px;
+  top: 50%;
+  left: 50%;
+  margin-left: -20px;
+  margin-top: -40px;
+}
+#rescate-modal .bar.bar-subheader{
+  background: #434343;
+}
+.platform-ios #rescate-modal .bar.bar-subheader {
+  top:64px;
+}
+#rescate-modal .button-clear:before{
+  font-size: 20px;
+  color:#eee;
+}
+.rescate-ubi {
+  background: #ea5b04;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: .5em;
+  height: 10%;
+}
+.rescate-ubi p{
+  width: 75%;
+}
+.rescate-ubi button{
+  width:25%;
+}

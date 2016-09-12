@@ -1,0 +1,27 @@
+<ion-modal-view id="rescate-modal">
+  <ion-header-bar class="bar bar-header bar-assertive">
+    <h1 class="title">Ubicación</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">Cancelar</button>
+    </div>
+  </ion-header-bar>
+  <div class="bar bar-subheader item-input-inset">
+    <label class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Buscar">
+    </label>
+    <button class="button icon ion-close-circled button-clear">
+    </button>
+  </div>
+  <ion-content>
+    <ng-map class="rescate-map" center='current-position'
+      map-type-control="false" street-view-control="false"
+      geo-fallback-center="[22.153843, -100.979790]"
+      geo-callback="callbackFunc('you')">
+      <img class="marker" src="img/marker.png">
+    </ng-map>
+    <button class="button button-full button-assertive" ng-click="confirmaUbi()">
+      CONFIRMAR UBICACIÓN
+    </button>
+  </ion-content>
+</ion-modal-view>

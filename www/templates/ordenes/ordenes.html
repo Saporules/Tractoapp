@@ -1,0 +1,37 @@
+<ion-view id="ordenes" view-title="Ordenes">
+  <ion-nav-bar class="bar bar-header bar-dark">
+    <ion-nav-buttons side="left">
+      <!-- Toggle left side menu -->
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button id="add-new" class="button button-icon icon ion-ios-plus"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-back-button></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="order in orders" ng-click="goOrder($index)">
+        <div class="l-1 row">
+          <div class="col">
+            <p><span class="span-left">Folio:</span><br />SER160816-0001</p>
+          </div>
+          <div class="col">
+            <p><span>Unidad:</span><br />{{order.unit.vehicle}}</p>
+          </div>
+        </div>
+        <div class="l-2 row">
+          <div class="col">
+            <p>{{order.observations}}</p>
+          </div>
+        </div>
+        <div class="l-3 row">
+          <div class="col status-bar" ng-class="setTheClass(order.status)">
+            <p>{{order.status}}</p>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

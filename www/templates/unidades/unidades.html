@@ -1,0 +1,44 @@
+<ion-view id="unidades" view-title="Unidades">
+  <ion-nav-bar class="bar bar-header bar-dark">
+    <ion-nav-buttons side="left">
+      <!-- Toggle left side menu -->
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button id="add-new" class="button button-icon icon ion-ios-plus"></button>
+    </ion-nav-buttons>
+
+
+    <ion-nav-back-button></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="unit in units" ng-click="goUnit($index)">
+        <div class="l-1 row">
+          <div class="col">
+            <p><span class="span-left">No. Econ:</span> <span class="no-econ">{{unit.economic_number}}</span></p>
+          </div>
+          <div class="col">
+            <p><span>Marca:</span> {{unit.brand}}</p>
+          </div>
+        </div>
+        <div class="l-2 row">
+          <div class="col col-50">
+            <p><span class="span-left">Tipo:</span> {{unit.vehicle}}</p>
+          </div>
+          <div class="col col-50">
+            <p><span>Modelo:</span> {{unit.model}}</p>
+          </div>
+        </div>
+        <div class="l-2 row">
+          <div class="col">
+            <p><span class="span-left">Placas:</span> {{unit.plates}}</p>
+          </div>
+          <div class="col">
+            <p><span>Color:</span> {{unit.colour}}</p>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

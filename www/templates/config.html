@@ -1,0 +1,16 @@
+<ion-view view-title="Configuración">
+  <ion-nav-bar class="bar bar-header bar-dark">
+    <ion-nav-buttons side="left">
+      <!-- Toggle left side menu -->
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-back-button></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+    <li ng-repeat="user in users">
+      <h1>Usuario: {{ user.email }}</h1>
+    </li>
+    <button class="button button-assertive" ng-click="signOutClick()">Cerrar Sesión</button>
+  </ion-content>
+</ion-view>
