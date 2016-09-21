@@ -1,0 +1,121 @@
+<ion-modal-view view-title="Editar de Unidad">
+	<ion-header-bar class="bar bar-header bar-dark">
+	<h1 class="title">Editar Unidad</h1>
+    <div class="buttons" side="right">
+      <button id="add-new" class="button button-icon icon ion-ios-close-empty" ng-click="closeModal()"></button>
+    </div>
+  </ion-header-bar>
+	<ion-content class="light-bg">
+		<form class="list tracto-modal">
+			<div class="item item-divider orange-box">
+	        	{{cliente}}
+	      	</div>
+	      	<label class="item item-input" ng-show="!cambiarTipo">
+			    <span class="input-label">Tipo de vehículo</span>
+			    <span class="input-label">
+			    	<button class="button button-icon icon ion-locked" ng-click="showConfirm()"></button>
+				    {{unit.vehicle_type.name}}
+			    </span>
+		  	</label>
+			<label class="item item-input item-select" ng-show="cambiarTipo">
+			    <div class="input-label">Tipo de vehículo</div>
+			    <select ng-model="unidad.vehicle_type_id" ng-change="vehicleTypeChange('form',unidad.vehicle_type_id)">
+			      <option value="" disabled selected hidden>-- Selecciona --</option>
+			      	<option ng-repeat="v in vehicles" value="{{v.id}}">{{v.name}}</option>
+			    </select>
+			</label>
+			<label class="item item-input">
+			    <span class="input-label">Placas</span>
+			    <input type="text" ng-model="unidad.plates" ng-init="unidad.plates = unit.plates">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Nº económico</span>
+			    <input type="text" ng-model="unidad.economic_number" ng-init="unidad.economic_number = unit.economic_number">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Nº de serie</span>
+			    <input type="text" ng-model="unidad.serial_number" ng-init="unidad.serial_number = unit.serial_number">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Marca</span>
+			    <input type="text" ng-model="unidad.brand" ng-init="unidad.brand = unit.brand">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Modelo</span>
+			    <input type="text" ng-model="unidad.model" ng-init="unidad.model = unit.model">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Año</span>
+			    <input type="text" ng-model="unidad.year" ng-init="unidad.year = unit.year">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Color</span>
+			    <input type="text" ng-model="unidad.colour" ng-init="unidad.colour = unit.colour">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Carburación</span>
+			    <input type="text" ng-model="unidad.carburization" ng-init="unidad.carburization = unit.carburization">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Cilindros</span>
+			    <input type="text" ng-model="unidad.cylinders" ng-init="unidad.cylinders = unit.cylinders">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Nº de motor</span>
+			    <input type="text" ng-model="unidad.motor_number" ng-init="unidad.motor_number = unit.motor_number">
+		  	</label>
+		  	<input type="hidden" name="" ng-model="unidad.customer_id" value="{{clientId}}" ng-init="unidad.customer_id = clientId">
+		</form>
+
+		<div class="item item-divider gray-box">
+	        Filtros:
+	    </div>
+
+	    <!-- FILTROS YA EXISTENTES -->
+		<form class="list tracto-modal" ng-repeat="f in unit.unit_filters" ng-if="cambiarTipo === false">
+			<div class="item item-divider">
+	        	{{f.filter_name}}
+	      	</div>
+	      	<label class="item item-input">
+			    <span class="input-label">Modelo</span>
+			    <input type="text" ng-model="filts[$index].filter_model" ng-init="filts[$index].filter_model = f.filter_model" value="">
+		  	</label>
+			<label class="item item-input">
+			    <span class="input-label">Último cambio</span>
+			    <input type="date" ng-model="filts[$index].last_change" ng-init="filts[$index].last_change = f.last_change" value="">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Sugerir cambio</span>
+			    <input type="date" ng-model="filts[$index].next_change" ng-init="filts[$index].next_change = f.next_change" value="">
+		  	</label>
+		  	<input type="hidden" name="" ng-model="filts[$index].filter_model" ng-init="filts[$index].filter_model = f.filter_model">
+		  	<input type="hidden" name="" ng-model="filts[$index].filter_id" ng-init="filts[$index].filter_id = f.filter_id">
+		</form>
+
+		<!-- FILTROS CAMBIADOS -->
+		<form class="list tracto-modal" ng-repeat="f in filters" ng-if="cambiarTipo === true">
+			<div class="item item-divider">
+	        	{{f.name}}
+	      	</div>
+	      	<label class="item item-input">
+			    <span class="input-label">Modelo</span>
+			    <input type="text" ng-model="filts[$index].filter_model">
+		  	</label>
+			<label class="item item-input">
+			    <span class="input-label">Último cambio</span>
+			    <input type="date" ng-model="filts[$index].last_change">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Sugerir cambio</span>
+			    <input type="date" ng-model="filts[$index].next_change">
+		  	</label>
+		  	<input type="text" name="" ng-model="filts[$index].filter_id" value="{{f.id}}" ng-init="filts[$index].filter_id = f.id">
+		</form>
+		<div class="row">
+	  		<div class="col"></div>
+		  	<div class="col">
+		  		<button class="button button-block orange-btn" ng-click="updateUnit()">Aceptar</button>
+		  	</div>
+	  	</div>
+	</ion-content>
+</ion-modal-view>

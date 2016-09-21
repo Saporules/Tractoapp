@@ -1,0 +1,93 @@
+<ion-modal-view view-title="Nueva Unidad">
+	<ion-header-bar class="bar bar-header bar-dark">
+	<h1 class="title">Nueva Unidad</h1>
+    <div class="buttons" side="right">
+      <button id="add-new"
+      	class="button button-icon icon ion-ios-close-empty"
+      	ng-click="closeModal('close',null)"
+      	ng-if="rolId != 2"></button>
+    </div>
+  </ion-header-bar>
+	<ion-content class="light-bg">
+		<form class="list tracto-modal">
+			<div class="item item-divider orange-box">
+	        	{{cliente}}
+	      	</div>
+			<label class="item item-input item-select">
+			    <div class="input-label">Tipo de vehículo</div>
+			    <select ng-model="unidad.vehicle_type_id" ng-change="vehicleTypeChange(unidad.vehicle_type_id)">
+			    	<option value="" disabled selected hidden>-- Selecciona --</option>
+			      	<option ng-repeat="v in vehicles" value="{{v.id}}">{{v.name}}</option>
+			    </select>
+			</label>
+			<label class="item item-input">
+			    <span class="input-label">Placas</span>
+			    <input type="text" ng-model="unidad.plates">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Nº económico</span>
+			    <input type="text" ng-model="unidad.economic_number">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Nº de serie</span>
+			    <input type="text" ng-model="unidad.serial_number">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Marca</span>
+			    <input type="text" ng-model="unidad.brand">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Modelo</span>
+			    <input type="text" ng-model="unidad.model">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Año</span>
+			    <input type="text" ng-model="unidad.year">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Color</span>
+			    <input type="text" ng-model="unidad.colour">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Carburación</span>
+			    <input type="text" ng-model="unidad.carburization">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Cilindros</span>
+			    <input type="text" ng-model="unidad.cylinders">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Nº de motor</span>
+			    <input type="text" ng-model="unidad.motor_number">
+		  	</label>
+		  	<input type="hidden" name="" ng-model="unidad.customer_id" value="{{clientId}}">
+		</form>
+		<div class="item item-divider gray-box">
+	        Filtros:
+	    </div>
+		<form class="list tracto-modal" ng-repeat="f in filters" ng-show="filtersOn">
+			<div class="item item-divider">
+	        	{{f.name}}
+	      	</div>
+	      	<label class="item item-input">
+			    <span class="input-label">Modelo</span>
+			    <input type="text" ng-model="filts[$index].filter_model">
+		  	</label>
+			<label class="item item-input">
+			    <span class="input-label">Último cambio</span>
+			    <input type="date" ng-model="filts[$index].last_change">
+		  	</label>
+		  	<label class="item item-input">
+			    <span class="input-label">Sugerir cambio</span>
+			    <input type="date" ng-model="filts[$index].next_change">
+		  	</label>
+		  	<input type="hidden" name="" ng-value="filts[$index].filter_id" ng-init="filts[$index].filter_id = f.id">
+		</form>
+		<div class="row">
+	  		<div class="col"></div>
+		  	<div class="col">
+		  		<button class="button button-block orange-btn" ng-click="newUnit()">Aceptar</button>
+		  	</div>
+	  	</div>
+	</ion-content>
+</ion-modal-view>

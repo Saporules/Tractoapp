@@ -20,20 +20,49 @@ body,ion-side-menus,ion-nav-view.the-darkness, ion-nav-view, ion-view,ion-conten
 }
 /* header */
 ion-nav-bar.bar.bar-header {
-    border-color: #434343;
-    background-color: #434343;
-    background-image: linear-gradient(0deg, #434343, #434343 50%, transparent 50%);
+  border-color: #434343;
+  background-color: #434343;
+  background-image: linear-gradient(0deg, #434343, #434343 50%, transparent 50%);
 }
-.platform-ios.platform-cordova:not(.fullscreen) ion-side-menu .has-header, .platform-ios.platform-cordova:not(.fullscreen) ion-side-menu .bar-subheader{
-  top: 64px;
+.platform-ios .nav-bar-block .bar-header{
+  height: 44px !important;
 }
-.platform-ios.platform-cordova:not(.fullscreen) .has-header, .platform-ios.platform-cordova:not(.fullscreen) .bar-subheader{
-  top: 84px;
+.platform-ios .nav-bar-block .bar-header .header-item{
+  margin-top:0px !important;
 }
 button#add-new:before{
   font-size: 24px;
 }
 
+.has-textarea textarea {
+  height: 70px;
+}
+.light-bg{
+  background: white;
+}
+form.list.tracto-modal {
+  margin-bottom: 0;
+}
+.tracto-modal .item-input input {
+  background: #e2e2e2;
+  width: 65%;
+  padding: 0 1em;
+  border-radius: 2px;
+}
+.tracto-modal .item-select select{
+  background: #e2e2e2;
+  border-radius: 2px;
+  height: 34px;
+  margin-top: 6px;
+}
+button.button.button-icon.icon.ion-locked {
+  min-height: auto;
+  height: 16px;
+}
+button.button.button-icon.icon.ion-locked:before {
+  font-size: 15px;
+  line-height: 15px;
+}
 /* popup */
 .popup-head{
   border-bottom: 1px solid #d8d8d8;
@@ -57,7 +86,23 @@ button#add-new:before{
 
 }
 .orange-btn{
-
+  background: #ff7600;
+  color:white;
+}
+.orange-box{
+  background: #ff7600;
+  color:white;
+  border:none;
+}
+.orange-box *{
+  color:white;
+}
+.gray-box {
+  background: #444444;
+  color: white;
+}
+.gray-box *{
+  color:white;
 }
 
 /* ANDROID
@@ -67,9 +112,13 @@ button#add-new:before{
 }
 /* MENU
 ––––––––––––––––––––––––––––*/
+#left-menu .scroll {
+  display: flex;
+  flex-direction: column;
+}
 .menu-header {
   width: 100%;
-  height: 150px;
+  height: 180px;
   background-image: url(../img/menu-bg.jpg);
   background-size: cover;
   display: flex;
@@ -86,6 +135,11 @@ button#add-new:before{
   font-size: 17px;
   color: white;
   margin: 0;
+}
+.menu-header p{
+  font-size: 15px;
+  color:white;
+  margin:0;
 }
 .custom-list .item {
   border: none;
@@ -104,6 +158,22 @@ button#add-new:before{
 }
 .current a.item-content {
   background: linear-gradient(to right, #363636 , #434343);
+}
+#left-menu .tracto-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5em 0.5em 1em;
+}
+#left-menu .tracto-info p{
+  margin-top: .5em;
+  color: #aaa;
+}
+#left-menu img#logo-menu {
+  width: 100%;
+  max-width: 200px;
+  align-self: center;
 }
 
 /* LOGIN
@@ -180,7 +250,7 @@ ion-view#login .scroll {
   content: '';
   display: flex;
   width: 50%;
-  height: 100%;
+  height: 14px;
 }
 .status .percentage-bar{
   width: 100%;
@@ -264,6 +334,10 @@ ion-view#login .scroll {
 #unidades .list ion-item.item span.no-econ {
   color: #444;
   font-weight: bold;
+}
+.l-header.row {
+  background: #ddd;
+  margin-bottom: .3em;
 }
 /* RESCATE
 ––––––––––––––––––––––––––––*/

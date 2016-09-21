@@ -43,7 +43,7 @@
             <div class="col-25 final"></div>
             <div class="col-75"><p><strong>Finalizado:</strong> {{ f.length }}</p></div>
           </div>
-          <div class="percentage-bar">
+          <div class="percentage-bar" ng-if="ordenes.length > 0">
             <div class="percentage-item recepcion-bar" style="width:{{style_ri}}%"></div>
             <div class="percentage-item servicio-bar" style="width:{{style_sp}}%"></div>
             <div class="percentage-item ingreso-bar" style="width:{{style_iu}}%"></div>
@@ -51,7 +51,7 @@
             <div class="percentage-item porfin-bar" style="width:{{style_pf}}%"></div>
             <div class="percentage-item final-bar" style="width:{{style_f}}%"></div>
           </div>
-        <a class="button button-block button-assertive" href="#/app/ordenes">Ver Órdenes</a>
+        <a class="button button-block button-assertive" href="#/app/ordenes" ng-if="ordenes.length > 0">Ver Órdenes</a>
       </div>
     </div>
   </ion-content>

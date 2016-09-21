@@ -1,16 +1,18 @@
 <ion-view view-title="Unidad">
   <ion-nav-bar class="bar bar-header bar-dark">
-    <ion-nav-back-button side="left">
-    </ion-nav-back-button>
+    <ion-nav-back-button></ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button id="add-new" class="button button-icon icon ion-edit" ng-click="openModal()" ng-if="rolId != 2"></button>
+    </ion-nav-buttons>
   </ion-nav-bar>
   <ion-content>
     <div class="card">
-      <div class="item item-divider">
-        Información de la Unidad
+      <div class="item item-divider orange-box">
+        <h2>Información de la Unidad</h2>
       </div>
       <div class="item item-text-wrap">
         <p>
-          <strong>Vehículo:</strong> {{unit.vehicle}}<br />
+          <strong>Tipo de Vehículo:</strong> {{unit.vehicle_type.name}}<br />
           <strong>Marca:</strong> {{unit.brand}}<br />
           <strong>Color:</strong> {{unit.colour}}<br />
           <strong>Modelo:</strong> {{unit.model}}<br />
@@ -21,6 +23,23 @@
           <strong>Carburación:</strong> {{unit.carburization}}<br />
           <strong>Cilíndros:</strong> {{unit.cylinders}}<br />
         </p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="item item-divider orange-box">
+        <h2>Filtros</h2>
+      </div>
+      <div ng-repeat="f in unit.unit_filters">
+        <div class="item item-divider">
+          <h2>{{f.filter_name}}</h2>
+        </div>
+        <div class="item item-text-wrap">
+          <p>
+            <strong>Modelo:</strong> {{f.filter_model}}<br />
+            <strong>Último cambio:</strong> {{f.last_change | date: 'dd-MM-yyyy'}}<br />
+            <strong>Cambio sugerido:</strong> {{f.next_change | date: 'dd-MM-yyyy'}}
+          </p>
+        </div>
       </div>
     </div>
   </ion-content>

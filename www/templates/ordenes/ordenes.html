@@ -1,11 +1,11 @@
-<ion-view id="ordenes" view-title="Ordenes">
+<ion-view id="ordenes" view-title="Solicitudes">
   <ion-nav-bar class="bar bar-header bar-dark">
     <ion-nav-buttons side="left">
       <!-- Toggle left side menu -->
       <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-      <button id="add-new" class="button button-icon icon ion-ios-plus"></button>
+      <button id="add-new" class="button button-icon icon ion-ios-plus" ng-click="openModal()" ng-if="rolId == 99"></button>
     </ion-nav-buttons>
 
     <ion-nav-back-button></ion-nav-back-button>

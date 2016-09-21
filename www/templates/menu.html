@@ -12,29 +12,30 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" id="left-menu">
     <ion-content>
       <div class="menu-header">
         <h1>{{nombre}}</h1>
-        <h3>{{correo}}</h3>
+        <h3><strong>{{correo}}</strong></h3>
+        <p>{{cliente}}</p>
       </div>
       <ion-list class="custom-list">
         <ion-item menu-close ui-sref="app.resumen" ui-sref-active="current">
           <label>Resumen</label>
           <i class="ion-chevron-right"></i>
         </ion-item>
-        <ion-item menu-close ui-sref="app.ordenes"ui-sref-active="current">
-          <label>Ordenes</label>
+        <ion-item menu-close ui-sref="app.ordenes" ui-sref-active="current">
+          <label>Solicitudes</label>
           <i class="ion-chevron-right"></i>
         </ion-item>
-        <ion-item menu-close ui-sref="app.unidades"ui-sref-active="current">
+        <ion-item menu-close ui-sref="app.unidades" ui-sref-active="current">
           <label>Unidades</label>
           <i class="ion-chevron-right"></i>
         </ion-item>
-        <ion-item menu-close ui-sref="app.rescate" ui-sref-active="current">
+        <!--ion-item menu-close ui-sref="app.rescate" ui-sref-active="current">
           <label>Rescate Carretero</label>
           <i class="ion-chevron-right"></i>
-        </ion-item>
+        </ion-item-->
         <ion-item menu-close href="#/app/miCuenta" ui-sref-active="current">
           <label>Mi Cuenta</label>
           <i class="ion-chevron-right"></i>
@@ -44,6 +45,10 @@
           <i class="ion-chevron-right"></i>
         </ion-item> -->
       </ion-list>
+      <div class="tracto-info">
+        <img src="img/logo.png" id="logo-menu">
+        <p>®2016 Todos los derechos reservados</p>
+      </div>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

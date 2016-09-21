@@ -11,12 +11,12 @@ angular.module('starter', [
   'ng-token-auth'
 ])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $ionicHistory) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
       cordova.plugins.Keyboard.disableScroll(true);
     }
     if (window.StatusBar) {
@@ -34,9 +34,10 @@ angular.module('starter', [
   // will extend the defaults using angular.extend
 
   $authProvider.configure({
-    apiUrl: 'https://stage-tractostation.herokuapp.com/api/v1',
+    apiUrl: 'https://production-tractostation.herokuapp.com/api/v1',
     storage: 'localStorage'
   });
+
 
   // STATE PROVIDER
   $stateProvider
@@ -96,14 +97,14 @@ angular.module('starter', [
     }
   })
   .state('app.unidad', {
-    url: '/unidades/:unidadId/:unidadIn',
+    cache: false,
+    url: '/unidades/:unidadId',
     views: {
       'menuContent': {
         templateUrl: 'templates/unidades/unidad.html',
         controller: 'UnidadCtrl',
         params: {
-          unidadId: '',
-          unidadIn: ''
+          unidadId: ''
         }
       }
     }

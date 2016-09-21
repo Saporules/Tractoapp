@@ -1,0 +1,40 @@
+<ion-modal-view view-title="Nueva Solicitud">
+	<ion-header-bar class="bar bar-header bar-dark">
+	<h1 class="title">Nueva Solicitud</h1>
+    <div class="buttons" side="right">
+      <button id="add-new" class="button button-icon icon ion-ios-close-empty" ng-click="closeModal()"></button>
+    </div>
+  </ion-header-bar>
+	<ion-content>
+		<form class="list">
+			<label class="item item-input item-select">
+			    <div class="input-label">Cliente</div>
+			    <select>
+			      <option selected>-- Selecciona --</option>
+			    </select>
+			</label>
+			<label class="item item-input has-textarea">
+			    <span class="input-label">Observaciones</span>
+			    <textarea></textarea>
+		  	</label>
+			<label class="item item-input item-select">
+			    <div class="input-label">Categoría</div>
+			    <select>
+			      <option selected>-- Selecciona --</option>
+			    </select>
+			</label>
+			<label class="item item-input item-select">
+			    <div class="input-label">Unidad</div>
+			    <select>
+			      <option selected>-- Selecciona --</option>
+			    </select>
+			</label>
+			<label class="item item-input item-select">
+			    <div class="input-label">Servicio</div>
+			    <select>
+			      <option selected>-- Selecciona --</option>
+			    </select>
+			</label>
+		</form>
+	</ion-content>
+</ion-modal-view>
