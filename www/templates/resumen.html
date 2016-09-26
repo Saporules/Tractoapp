@@ -8,51 +8,56 @@
     <ion-nav-back-button></ion-nav-back-button>
   </ion-nav-bar>
   <ion-content>
-    <div class="list card">
-      <div class="item item-divider">
-        Órdenes de Servicio
-      </div>
-      <div class="item item-body">
-        <p>
-          <strong>Total de órdenes:</strong> {{ordenes.length}}<br />
-        </p>
-      </div>
-      <div class="item item-body status">
-        <h2>Status de las órdenes</h2>
-          <div class="row">
-            <div class="col-25 recepcion"></div>
-            <div class="col-75"><p><strong>Recepción de información:</strong> {{ ri.length }}</p></div>
-          </div>
-          <div class="row">
-            <div class="col-25 servicio"></div>
-            <div class="col-75"><p><strong>Servicio programado:</strong> {{ sp.length }}</p></div>
-          </div>
-          <div class="row">
-            <div class="col-25 ingreso"></div>
-            <div class="col-75"><p><strong>Ingreso de la Unidad:</strong> {{ iu.length }}</p></div>
-          </div>
-          <div class="row">
-            <div class="col-25 repara"></div>
-            <div class="col-75"><p><strong>En Reparación:</strong> {{ er.length }}</p></div>
-          </div>
-          <div class="row">
-            <div class="col-25 porfin"></div>
-            <div class="col-75"><p><strong>Por Finalizar:</strong> {{ pf.length }}</p></div>
-          </div>
-          <div class="row">
-            <div class="col-25 final"></div>
-            <div class="col-75"><p><strong>Finalizado:</strong> {{ f.length }}</p></div>
-          </div>
-          <div class="percentage-bar" ng-if="ordenes.length > 0">
-            <div class="percentage-item recepcion-bar" style="width:{{style_ri}}%"></div>
-            <div class="percentage-item servicio-bar" style="width:{{style_sp}}%"></div>
-            <div class="percentage-item ingreso-bar" style="width:{{style_iu}}%"></div>
-            <div class="percentage-item repara-bar" style="width:{{style_er}}%"></div>
-            <div class="percentage-item porfin-bar" style="width:{{style_pf}}%"></div>
-            <div class="percentage-item final-bar" style="width:{{style_f}}%"></div>
-          </div>
-        <a class="button button-block button-assertive" href="#/app/ordenes" ng-if="ordenes.length > 0">Ver Órdenes</a>
-      </div>
+    <div class="ordenes-info">
+      <a class="oi-cont oi-cont-0" href="#/app/ordenes/0">
+        <div class="oi-num">{{ ordenes.length }}</div>
+        <div class="oi-des">
+          <p>Total solicitudes</p>
+          <i class="ion-chevron-right"></i>
+        </div>
+      </a>
+      <a class="oi-cont oi-cont-1" href="#/app/ordenes/1">
+        <div class="oi-num">{{ ri.length }}</div>
+        <div class="oi-des">
+          <p>Recepción de información</p>
+          <i class="ion-chevron-right"></i>
+        </div>
+      </a>
+      <a class="oi-cont oi-cont-2" href="#/app/ordenes/2">
+        <div class="oi-num">{{ sp.length }}</div>
+        <div class="oi-des">
+          <p>Servicio programado</p>
+          <i class="ion-chevron-right"></i>
+        </div>
+      </a>
+      <a class="oi-cont oi-cont-3" href="#/app/ordenes/3">
+        <div class="oi-num">{{ iu.length }}</div>
+        <div class="oi-des">
+          <p>Ingreso de la Unidad</p>
+          <i class="ion-chevron-right"></i>
+        </div>
+      </a>
+      <a class="oi-cont oi-cont-4" href="#/app/ordenes/4">
+        <div class="oi-num">{{ er.length }}</div>
+        <div class="oi-des">
+          <p>En Reparación</p>
+          <i class="ion-chevron-right"></i>
+        </div>
+      </a>
+      <a class="oi-cont oi-cont-5" href="#/app/ordenes/5">
+        <div class="oi-num">{{ pf.length }}</div>
+        <div class="oi-des">
+          <p>Por Finalizar</p>
+          <i class="ion-chevron-right"></i>
+        </div>
+      </a>
+      <a class="oi-cont oi-cont-6" href="#/app/ordenes/6">
+        <div class="oi-num">{{ f.length }}</div>
+        <div class="oi-des">
+          <p>Finalizado</p>
+          <i class="ion-chevron-right"></i>
+        </div>
+      </a>
     </div>
   </ion-content>
 </ion-view>

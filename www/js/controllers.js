@@ -4,7 +4,7 @@ angular.module('starter.controllers', [
   'ng-token-auth'
 ])
 //––––––––––––––– LoginCtrl –––––––––––––––//
-.controller('LoginCtrl', function($scope, $stateParams, $state, $localStorage, $ionicHistory, $ionicPopup, $auth, $ionicLoading, UserData, HeadersSave) {
+.controller('LoginCtrl', function($scope, $stateParams, $state, $localStorage, $ionicHistory, $ionicPopup, $auth, $ionicLoading, UserData) {
   $ionicLoading.show();
   $auth.validateUser().then(function(resp){
     $state.go('app.resumen');
@@ -13,6 +13,7 @@ angular.module('starter.controllers', [
   });
 
   $scope.$sesion = $localStorage;
+
   console.log("LoginCtrl");
   $scope.loginForm = {};
 
@@ -20,14 +21,15 @@ angular.module('starter.controllers', [
     $ionicLoading.show();
     $auth.submitLogin($scope.loginForm)
       .then(function(resp) {
-        HeadersSave.setHeaders(resp);
+
         var str = localStorage.auth_headers;
         var pre_sesion = str.replace("-","_");
-        var sesion = JSON.parse(pre_sesion);
-        $scope.$sesion.headers= sesion;
+
+        $scope.$sesion.headers = JSON.parse(pre_sesion);
         $scope.$sesion.id = resp.id;
         $scope.$sesion.custId = resp.customer_id;
-        UserData.getUserData($scope.$sesion.id, $scope.$sesion.header).then(function(response){
+
+        UserData.getUserData(resp.id,resp.uid).then(function(response){
           $scope.$sesion.user = response;
           $ionicLoading.hide();
           $state.go('app.resumen');
@@ -65,7 +67,13 @@ angular.module('starter.controllers', [
 
 //––––––––––––––– AppCtrl –––––––––––––––//
 .controller('AppCtrl',
-function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $localStorage){
+function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $localStorage){
+  $auth.validateUser().then(function(resp){
+    //nothing happens
+  }).catch(function(resp){
+    localStorage.clear();
+    $state.go('login');
+  });
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -74,29 +82,29 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  
+  $scope.$sesion = $localStorage;
+  if(!$scope.$sesion.user){
+    $scope.$sesion.user = {};
+  }
   // La Plataforma ionic está lista
   $ionicPlatform.ready(function() {
-    $scope.$sesion = $localStorage;
+    
+    console.log($scope.$sesion.user);
 
     $scope.nombre = $scope.$sesion.user.name+' '+$scope.$sesion.user.paternal_lastname+' '+$scope.$sesion.user.maternal_lastname;
     $scope.elnombre = $scope.$sesion.user.name;
     $scope.paterno = $scope.$sesion.user.paternal_lastname;
     $scope.materno = $scope.$sesion.user.maternal_lastname;
-    if ($scope.$sesion.user.roles != ''){
-      if ($scope.$sesion.user.roles[0].name === 't_admin') {
-        $scope.rol = 'Administrador';
-        $scope.rolId = 0;
-      }else if ($scope.$sesion.user.roles[0].name === 't_manager') {
-        $scope.rol = 'Gerente';
-        $scope.rolId = 1;
-      }else if ($scope.$sesion.user.roles[0].name === 't_mechanic') {
-        $scope.rol = 'Mecánico';
-        $scope.rolId = 2;
-      }
-    }else{
-      $scope.rol = '';
+    $scope.rol = $scope.$sesion.user.roles[0].name_alias;
+
+    if ($scope.$sesion.user.roles[0].name === 't_admin') {
+      $scope.rolId = 0;
+    }else if ($scope.$sesion.user.roles[0].name === 't_manager') {
+      $scope.rolId = 1;
+    }else if ($scope.$sesion.user.roles[0].name === 't_mechanic') {
+      $scope.rolId = 2;
     }
+ 
     $scope.correo = $scope.$sesion.user.email;
     if($scope.$sesion.user.customer.name != null){
       $scope.cliente = $scope.$sesion.user.customer.name;
@@ -105,8 +113,19 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
       $scope.cliente = '';
       $scope.clienteId = '';
     }
-    console.log('Rol: '+$scope.rolId);
+
 	});
+
+  $scope.showAlert = function() {
+    var alertPopup = $ionicPopup.alert({
+     title: 'Don\'t eat that!',
+     template: $scope.nombre+' '+$scope.rol
+    });
+
+    alertPopup.then(function(res) {
+     console.log('Thank you for not eating my delicious ice cream cone');
+    });
+  };
 })//END AppCtrl
 
 //––––––––––––––– ConfigCtrl –––––––––––––––//
@@ -302,7 +321,7 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
   $scope.closeModal = function() {
     $scope.modal.hide();
     $scope.reloadData();
-    
+
     $scope.$watch( 'unit',
       function(newValue, oldValue){
       console.log('unit Changed');
@@ -339,11 +358,26 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
      title: '¿Cambiar tipo de Vehículo?',
      template: 'Al cambiar el tipo de vehículo la información guardada sobre los filtros se borrará'
    });
-
    confirmPopup.then(function(res) {
      if(res) {
       $scope.cambiarTipo = true;
       $scope.vehicleTypeChange();
+      console.log('You are sure');
+     } else {
+       console.log('You are not sure');
+     }
+   });
+  };
+
+  // Se confirma la eliminación de la unidad
+  $scope.showDeleteConfirm = function() {
+   var confirmPopup = $ionicPopup.confirm({
+     title: '¿Deseas eliminar esta unidad?',
+     template: 'Al eliminar la unidad se borrará definitivamente'
+   });
+   confirmPopup.then(function(res) {
+     if(res) {
+      $scope.deleteUnit();
       console.log('You are sure');
      } else {
        console.log('You are not sure');
@@ -377,17 +411,34 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
     });
   }
 
+  $scope.deleteUnit = function(){
+    $ionicLoading.show();
+    console.log($scope.object);
+    UnitsData.deleteUnit(unidadId).then(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+      $state.go('app.unidades');
+    }).catch(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+    });
+  }
+
 })//END UnidadCtrl
 
 //––––––––––––––– OrdenesCtrl –––––––––––––––//
 .controller('OrdenesCtrl',
   function($scope, $state, $stateParams, $localStorage,$ionicLoading,OrdersData, $ionicModal) {
   $scope.$sesion = $localStorage;
+  $scope.filtrado = $stateParams.filtrado;
+  $scope.existen = true;
+  $scope.filteredOrders;
+
   $ionicLoading.show();
 
   OrdersData.getOrdersData().then(function(response){
     $scope.orders = response;
-    // console.log(response);
+    console.log(response);
     $scope.$sesion.ordenes = response;
     $ionicLoading.hide();
   }).catch(function(response){
@@ -410,7 +461,7 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
       case 'Servicio programado':
         return 'servicio-status';
         break;
-      case 'Ingreso de la uni':
+      case 'Ingreso de la unidad':
         return 'ingreso-status';
         break;
       case 'En reparación':
@@ -421,6 +472,52 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
         break;
       case 'Finalizado':
         return 'final-status';
+        break;
+      case "1":
+        return 'recepcion-status';
+        break;
+      case "2":
+        return 'servicio-status';
+        break;
+      case "3":
+        return 'ingreso-status';
+        break;
+      case "4":
+        return 'repara-status';
+        break;
+      case "5":
+        return 'porfin-status';
+        break;
+      case "6":
+        return 'final-status';
+        break;
+      default:
+      break;
+    }
+  }
+
+  $scope.setTheString = function(status){
+    switch (status) {
+      case "0":
+        return 'Vista general';
+        break;
+      case "1":
+        return 'Recepción de información';
+        break;
+      case "2":
+        return 'Servicio programado';
+        break;
+      case "3":
+        return 'Ingreso de la unidad';
+        break;
+      case "4":
+        return 'En reparación';
+        break;
+      case "5":
+        return 'Por finalizar';
+        break;
+      case "6":
+        return 'Finalizado';
         break;
       default:
       break;
@@ -463,22 +560,15 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
 //––––––––––––––– MiCuentaCtrl –––––––––––––––//
 .controller('MiCuentaCtrl', function($scope, $state, $stateParams, $localStorage, $ionicLoading, $auth) {
   $scope.$sesion = $localStorage;
-  // console.log($scope.$sesion.user);
   $scope.signOutClick = function() {
-    // console.log('botón de cerrar Sesion');
     $ionicLoading.show();
     $auth.signOut()
       .then(function(resp) {
-        // handle success response
-        //console.log("adiós sesión jajajajaja >:)");
         $ionicLoading.hide();
         localStorage.clear();
         $state.go('login');
       })
       .catch(function(resp) {
-        // handle error response
-        // console.log(resp);
-        // console.log("cerrar Sesión incorrecto");
         $ionicLoading.hide();
       });
   };
@@ -541,12 +631,12 @@ function($scope, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $lo
   OrdersData.getOrdersData().then(function(response){
     $scope.ordenes = response;
     // console.log("tamaño ordenes: "+$scope.ordenes.length);
-    $scope.ri = $filter('filter')($scope.ordenes, {status:'Recepción de información'});
-    $scope.sp = $filter('filter')($scope.ordenes, {status:'Servicio programado'});
-    $scope.iu = $filter('filter')($scope.ordenes, {status:'Ingreso de la unidad'});
-    $scope.er = $filter('filter')($scope.ordenes, {status:'En reparación'});
-    $scope.pf = $filter('filter')($scope.ordenes, {status:'Por finalizar'});
-    $scope.f = $filter('filter')($scope.ordenes, {status:'Finalizado'});
+    $scope.ri = $filter('filter')($scope.ordenes, {status:1});
+    $scope.sp = $filter('filter')($scope.ordenes, {status:2});
+    $scope.iu = $filter('filter')($scope.ordenes, {status:3});
+    $scope.er = $filter('filter')($scope.ordenes, {status:4});
+    $scope.pf = $filter('filter')($scope.ordenes, {status:5});
+    $scope.f = $filter('filter')($scope.ordenes, {status:6});
     $ionicLoading.hide();
     // Longitud de las barras
     $scope.style_ri = Math.trunc(($scope.ri.length*100)/$scope.ordenes.length);

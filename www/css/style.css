@@ -10,6 +10,7 @@ body,ion-side-menus,ion-nav-view.the-darkness, ion-nav-view, ion-view,ion-conten
   background: #434343;
   color:#fff;
 }
+.scroll{background: transparent}
 .the-darkness ion-header-bar.bar-stable.bar.bar-header {
   background: #434343;
   box-shadow: none;
@@ -178,6 +179,14 @@ button.button.button-icon.icon.ion-locked:before {
 
 /* LOGIN
 ––––––––––––––––––––––––––––*/
+#login ion-content {
+    background: url(../img/login-bg.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position-y: bottom;
+    background-position-x: center;
+}
 ion-view#login .scroll {
   display: flex;
   justify-content: center;
@@ -196,8 +205,6 @@ ion-view#login .scroll {
 #login form {
   width: 90%;
   max-width: 375px;
-  border: 1px solid #565656;
-  box-shadow: 0px 0px 50px #232323;
   padding: 1.5em;
   margin: 2em 0;
   min-height: 215px;
@@ -208,6 +215,7 @@ ion-view#login .scroll {
   padding: .3em;
 }
 #login form .list .item input {
+  background: rgba(67,67,67,.6);
   border: 1px solid #FF6000;
   border-radius: 50px;
   text-align: center;
@@ -237,7 +245,97 @@ ion-view#login .scroll {
 }
 /* RESUMEN
 ––––––––––––––––––––––––––––*/
-#resumen .item.item-body p,#resumen .item.item-body h2{
+.ordenes-info{
+  max-width: 320px;
+  width: 100%;
+  display: block;
+  margin: auto;
+  padding: 1em;
+}
+.oi-cont{
+  text-decoration: none;
+  border: solid 4px;
+  margin-bottom: .3em;
+  border-top-right-radius: 60px;
+  border-bottom-right-radius: 60px;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height:50px;
+  background: white;
+  color: black;
+}
+.oi-num{
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  justify-content: center;
+  border-radius: 200px;
+  margin-left: -4px;
+  color:black;
+}
+.oi-des{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  width: 80%;
+  padding: 0 1em;
+}
+.oi-des p{
+  margin:0;
+}
+.oi-cont-0{
+border-color:#F58B10;
+background-color: #F58B10;
+margin-bottom: 1em;
+}
+.oi-cont-0 p{
+  font-size: 20px;
+}
+.oi-cont-1{
+border-color:#FD2727;
+}
+.oi-cont-2{
+  border-color:#F58B10;
+}
+.oi-cont-3{
+  border-color:#FFC810;
+}
+.oi-cont-4{
+  border-color:#DAFD15;
+}
+.oi-cont-5{
+  border-color:#9EE31C;
+}
+.oi-cont-6{
+  border-color:#0FBE15;
+}
+.oi-cont-1 .oi-num{
+background-color:#FD2727; 
+}
+.oi-cont-2 .oi-num{
+  background-color:#F58B10; 
+}
+.oi-cont-3 .oi-num{
+  background-color:#FFC810; 
+}
+.oi-cont-4 .oi-num{
+  background-color:#DAFD15; 
+}
+.oi-cont-5 .oi-num{
+  background-color:#9EE31C; 
+}
+.oi-cont-6 .oi-num{
+  background-color:#0FBE15; 
+}
+
+/*#resumen .item.item-body p,#resumen .item.item-body h2{
   margin-top: 0;
 }
 #resumen .status .col-25 {
@@ -264,11 +362,14 @@ ion-view#login .scroll {
 .status .ingreso-bar,.status .ingreso:after{background: #FFC810}
 .status .repara-bar,.status .repara:after{background: #DAFD15}
 .status .porfin-bar,.status .porfin:after{background: #9EE31C}
-.status .final-bar,.status .final:after{background: #0FBE15}
+.status .final-bar,.status .final:after{background: #0FBE15}*/
 
 /* ORDENES
 ––––––––––––––––––––––––––––*/
-
+#ordenes h3{
+  padding:1em;
+  color: white;
+}
 
 #ordenes .list ion-item.item{
   padding: 0;
@@ -282,6 +383,9 @@ ion-view#login .scroll {
   color: #474747;
   font-size: 16px;
   white-space: normal;
+}
+#ordenes .list ion-item.item .l-1.row p{
+  text-align: left;
 }
 #ordenes .l-1.row, #ordenes .l-2.row {
   width: 95%;

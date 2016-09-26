@@ -11,8 +11,10 @@ angular.module('starter')
     }
 })
 .factory('UnitsData', function($http){
-    var url = 'https://production-tractostation.herokuapp.com/api/v1/customer/units/';
-    var url2 = 'https://production-tractostation.herokuapp.com/api/v1/units/';
+    var url = 'https://production-tractostation.herokuapp.com/api/v1/customer/units/';//production
+    // var url = 'https://stage-tractostation.herokuapp.com/api/v1/customer/units/';//stage
+    var url2 = 'https://production-tractostation.herokuapp.com/api/v1/units/';//production
+    // var url2 = 'https://stage-tractostation.herokuapp.com/api/v1/units/';//stage
     var cusId = localStorage.getItem('ngStorage-custId');
     var units = {};
     var singleUnit = {};
@@ -87,11 +89,22 @@ angular.module('starter')
                 console.log('no lo logramos :(');
                 console.log(response)
             });
+        },
+        deleteUnit: function(unitId){
+            console.log('deleteUnit()');
+            return $http.delete(url2+unitId).then(function(response){
+                console.log('logramos borrar!');
+                console.log(response);
+            }).catch(function(){
+                console.log('no lo logramos borrar :(');
+                console.log(response);
+            });
         }
     }
 })
 .factory('OrdersData', function($http){
-    var url = 'https://production-tractostation.herokuapp.com/api/v1/customer/orders/';
+    var url = 'https://production-tractostation.herokuapp.com/api/v1/customer/orders/';//production
+    // var url = 'https://stage-tractostation.herokuapp.com/api/v1/customer/orders/';//stage
     var cusId = localStorage.getItem('ngStorage-custId');
     var singleOrder = {};
 
@@ -113,7 +126,8 @@ angular.module('starter')
 })
 .factory('VehicleTypes', function($http){
 
-    var url = 'https://production-tractostation.herokuapp.com/api/v1/vehicle_types';
+    var url = 'https://production-tractostation.herokuapp.com/api/v1/vehicle_types';//production
+    // var url = 'https://stage-tractostation.herokuapp.com/api/v1/vehicle_types';//stage
     var filters = {};
     return {
         getVehicleType: function(){
@@ -129,10 +143,13 @@ angular.module('starter')
 })
 .factory('UserData', function($http){
 
-    var url_u = 'https://production-tractostation.herokuapp.com/api/v1/users/';
+    var url_u = 'https://production-tractostation.herokuapp.com/api/v1/users/';//production
+    // var url_u = 'https://stage-tractostation.herokuapp.com/api/v1/users/';//stage
     return {
         getUserData: function(id,uid){
             console.log('getUserData()');
+            console.log(id);
+            console.log(uid);
             var ops = {
                 method: 'GET',
                 url: url_u+id,

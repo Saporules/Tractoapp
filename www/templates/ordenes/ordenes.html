@@ -12,13 +12,17 @@
   </ion-nav-bar>
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="order in orders" ng-click="goOrder($index)">
+
+      <!-- todas las ordenes -->
+      <ion-item data-ng-repeat="order in orders" ng-click="goOrder($index)" ng-if="filtrado == 0">
         <div class="l-1 row">
           <div class="col">
-            <p><span class="span-left">Folio:</span><br />SER160816-0001</p>
+            <p><span class="span-left">Folio:</span> {{order.folio_number}}</p>
           </div>
+        </div>
+        <div class="l-1 row">
           <div class="col">
-            <p><span>Unidad:</span><br />{{order.unit.vehicle}}</p>
+            <p><span>Unidad:</span> {{order.unit.economic_number}}</p>
           </div>
         </div>
         <div class="l-2 row">
@@ -28,10 +32,35 @@
         </div>
         <div class="l-3 row">
           <div class="col status-bar" ng-class="setTheClass(order.status)">
-            <p>{{order.status}}</p>
+            <p>{{ setTheString(order.status) }}</p>
+          </div>
+        </div>
+      </ion-item>
+
+      <!-- ordenes filtradas -->
+      <ion-item data-ng-repeat="order in filteredOrders = ( orders | filter: { status: filtrado } )" ng-click="goOrder($index)" ng-if="filtrado != 0">
+        <div class="l-1 row">
+          <div class="col">
+            <p><span class="span-left">Folio:</span> {{order.folio_number}}</p>
+          </div>
+        </div>
+        <div class="l-1 row">
+          <div class="col">
+            <p><span>Unidad:</span> {{order.unit.economic_number}}</p>
+          </div>
+        </div>
+        <div class="l-2 row">
+          <div class="col">
+            <p>{{order.observations}}</p>
+          </div>
+        </div>
+        <div class="l-3 row">
+          <div class="col status-bar" ng-class="setTheClass(order.status)">
+            <p>{{ setTheString(order.status) }}</p>
           </div>
         </div>
       </ion-item>
     </ion-list>
+    <h3 ng-if="filteredOrders.length == 0 && filtrado != 0">No hay solicitudes en estado: {{setTheString(filtrado)}}</h3>
   </ion-content>
 </ion-view>

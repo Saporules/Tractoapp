@@ -34,7 +34,8 @@ angular.module('starter', [
   // will extend the defaults using angular.extend
 
   $authProvider.configure({
-    apiUrl: 'https://production-tractostation.herokuapp.com/api/v1',
+    // apiUrl: 'https://stage-tractostation.herokuapp.com/api/v1',//stage
+    apiUrl: 'https://production-tractostation.herokuapp.com/api/v1',//production
     storage: 'localStorage'
   });
 
@@ -48,6 +49,7 @@ angular.module('starter', [
   })
 
   .state('app', {
+    cache:false,
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
@@ -119,7 +121,7 @@ angular.module('starter', [
     }
   })
   .state('app.ordenes', {
-    url: '/ordenes',
+    url: '/ordenes/:filtrado',
     views: {
       'menuContent': {
         templateUrl: 'templates/ordenes/ordenes.html',

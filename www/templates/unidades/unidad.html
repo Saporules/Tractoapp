@@ -2,7 +2,8 @@
   <ion-nav-bar class="bar bar-header bar-dark">
     <ion-nav-back-button></ion-nav-back-button>
     <ion-nav-buttons side="right">
-      <button id="add-new" class="button button-icon icon ion-edit" ng-click="openModal()" ng-if="rolId != 2"></button>
+      <button id="add-new" class="button button-icon icon ion-edit" ng-click="openModal()"></button>
+      <button id="add-new" class="button button-icon icon ion-trash-b" ng-click="showDeleteConfirm()"></button>
     </ion-nav-buttons>
   </ion-nav-bar>
   <ion-content>
@@ -12,12 +13,12 @@
       </div>
       <div class="item item-text-wrap">
         <p>
+          <strong>No. Económico:</strong> {{unit.economic_number}}<br />
           <strong>Tipo de Vehículo:</strong> {{unit.vehicle_type.name}}<br />
           <strong>Marca:</strong> {{unit.brand}}<br />
           <strong>Color:</strong> {{unit.colour}}<br />
           <strong>Modelo:</strong> {{unit.model}}<br />
           <strong>Año:</strong> {{unit.year}}<br />
-          <strong>No. Económico:</strong> {{unit.economic_number}}<br />
           <strong>Placas:</strong> {{unit.plates}}<br />
           <strong>No. de Serie:</strong> {{unit.serial_number}}<br />
           <strong>Carburación:</strong> {{unit.carburization}}<br />
