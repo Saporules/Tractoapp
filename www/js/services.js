@@ -118,33 +118,43 @@ angular.module('starter')
 
     
     var cusId = localStorage.getItem('ngStorage-custId');
-    var usrId = localStorage.getItem('ngStorage-id');
-    console.log(usrId);
+    // var usrId = localStorage.getItem('ngStorage-id');
+    
+    var allOrders = [];
     var singleOrder = {};
 
     return {
-        getOrdersData: function(uid){
-            return $http.get(url+uid+'/orders/').then(function(response){
-                var data = response.data;
-                console.log(data);
-                //do something exciting with the data
-                return data;
-            });
+        setOrdersData: function(arr){
+            allOrders = arr;
+        },
+        getOrdersData: function(uid,time){
+            console.log('getOrdersData('+uid+','+time+')');
+            if (time === 'first'){
+                return $http.get(url+uid+'/orders/').then(function(response){
+                    var data = response.data;
+                    console.log(data);
+                    //do something exciting with the data
+                    return data;
+                });
+            }else{
+                return allOrders;
+            }
         },
         setSingleOrder: function(obj){
+            console.log('setSingleOrder('+obj.id+')');
             singleOrder = obj;
         },
-        getSingleOrder: function(orderId){
-            console.log('getSingleUnit()');
+        getSingleOrder: function(orderId,uid){
+            console.log('getSingleOrder('+orderId+','+uid+')');
 
             if (orderId === 'none') {
                 console.log('none');
                 console.log(singleOrder);
                 return singleOrder;
             }else {
-                return $http.get(url+usrId+'/orders/'+orderId).then(function(response){
+                return $http.get(url+uid+'/orders/'+orderId).then(function(response){
                     singleOrder = response.data;
-                    console.log(orderId);
+                    // console.log(orderId);
                     console.log(singleOrder);
                     return singleOrder;
                 });

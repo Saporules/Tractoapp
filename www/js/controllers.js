@@ -492,19 +492,29 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   $scope.services = [];
   $scope.new_order = {};
   $scope.orders = [];
+  console.log('filtrado: '+$scope.filtrado);
 
-  $ionicLoading.show();
 
-  OrdersData.getOrdersData($scope.userId).then(function(response){
-    $scope.orders = response;
-    // console.log(response);
-    $scope.$sesion.ordenes = response;
-    $ionicLoading.hide();
-  }).catch(function(response){
-    // console.log(response);
-  });
+  $scope.orders = OrdersData.getOrdersData($scope.userId,'other');
+
+  if($scope.orders.length == 0){
+    console.log('el arreglo de ordenes está vacío');
+    $ionicLoading.show();
+    OrdersData.getOrdersData($scope.userId,'first').then(function(response){
+      $scope.orders = response;
+      // console.log(response);
+      // $scope.$sesion.ordenes = response;
+      OrdersData.setOrdersData(response);
+      $ionicLoading.hide();
+    }).catch(function(response){
+      // console.log(response);
+      $ionicLoading.hide();
+    });
+  }
+  
 
   $scope.goOrder = function(orderId){
+    console.log('goOrder('+orderId+')')
     $scope.singleOrder = $filter('filter')($scope.orders, {id:orderId});
     OrdersData.setSingleOrder($scope.singleOrder[0]);
     console.log($scope.singleOrder[0]);
@@ -658,6 +668,13 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
       return true;
     }
   }
+  $scope.allOrders = function(){  
+    if($scope.filtrado == 'all'){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   $scope.customerChange = function(cusId){
     OrdersData.getSimpleUnits(cusId).then(function(response){
@@ -690,6 +707,7 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   
   $scope.$sesion = $localStorage;
   $scope.rolId = $scope.$sesion.rolId;
+  $scope.userId = $scope.$sesion.id;
   
   if ($ionicHistory.backView() != null) {
     var sourceState = $ionicHistory.backView().stateId;
@@ -701,15 +719,15 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   $scope.order = {};
   //console.log($scope.order.id);
 
-  if(sourceState !== 'app.unidades'){
-    OrdersData.getSingleOrder(orderId).then(function(response){
+  if(sourceState !== 'app.ordenes'){
+    OrdersData.getSingleOrder(orderId,$scope.userId).then(function(response){
       $scope.order = response;
-      //console.log(response);
+      console.log(response);
     }).catch(function(response){
       console.log(response);
     });
   }else{
-    $scope.order = UnitsData.getSingleUnit('none');
+    $scope.order = OrdersData.getSingleOrder(orderId);
     $scope.$watch('order', function() {
       console.log('hey, order has changed!');
     });
@@ -985,7 +1003,7 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   $ionicLoading.show();
   $scope.$sesion = $localStorage;
   $scope.userId = $scope.$sesion.id;
-  OrdersData.getOrdersData($scope.userId).then(function(response){
+  OrdersData.getOrdersData($scope.userId,'first').then(function(response){
     $scope.ordenes = response;
     // console.log("tamaño ordenes: "+$scope.ordenes.length);
     $scope.ri = $filter('filter')($scope.ordenes, {status:1});
@@ -1003,6 +1021,7 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
     $scope.style_pf = Math.trunc(($scope.pf.length*100)/$scope.ordenes.length);
     $scope.style_f = Math.trunc(($scope.f.length*100)/$scope.ordenes.length);
     // console.log($scope.style_ri);
+    OrdersData.setOrdersData(response);
   }).catch(function(response){
     // console.log(response);
   });
