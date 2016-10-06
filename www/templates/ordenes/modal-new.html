@@ -1,0 +1,57 @@
+<ion-modal-view view-title="Nueva Solicitud">
+	<ion-header-bar class="bar bar-header bar-dark">
+	<h1 class="title">Nueva Solicitud</h1>
+    <div class="buttons" side="right">
+      <button id="add-new"
+      	class="button button-icon icon ion-ios-close-empty"
+      	ng-click="closeModal()"
+      	ng-if="rolId != 2"></button>
+    </div>
+  </ion-header-bar>
+	<ion-content>
+		<form class="list">
+			<div class="item item-divider orange-box" ng-if="!clientCanSee()">
+	        	{{customer_name}}
+	      	</div>
+			<label class="item item-input item-select" ng-if="clientCanSee()">
+			    <div class="input-label">Cliente</div>
+			    <select ng-model="new_order.customer_id" ng-change="customerChange(new_order.customer_id)">
+			    	<option value="" disabled selected hidden>-- Selecciona --</option>
+			      	<option ng-repeat="customer in customers | orderBy: 'name'" value="{{customer.id}}">{{customer.name}}</option>
+			    </select>
+			</label>
+			<label class="item item-input has-textarea" ng-if="rolId == 2">
+			    <span class="input-label">Cliente</span>
+			    <input ng-model="new_order.customer_id" ng-init ="cliente" value ="clienteId" disabled></input>
+		  	</label>
+			<label class="item item-input has-textarea">
+			    <span class="input-label">Observaciones</span>
+			    <textarea ng-model="new_order.observations"></textarea>
+		  	</label>
+			<label class="item item-input item-select">
+			    <div class="input-label">Categoría</div>
+			    <select ng-model="new_order.category_id">
+			      <option value="" disabled selected hidden>-- Selecciona --</option>
+			      <option ng-repeat="category in categories | orderBy: 'name'" value="{{category.id}}">{{category.name}}</option>
+			    </select>
+			</label>
+			<label class="item item-input item-select">
+			    <div class="input-label">Unidad</div>
+			    <select ng-model="new_order.unit_id">
+			      <option value="" disabled selected hidden>-- Selecciona --</option>
+			      <option ng-repeat="unit in units | orderBy: 'economic_number'" value="{{unit.id}}">{{unit.economic_number}}</option>
+			    </select>
+			</label>
+			<label class="item item-input item-select">
+			    <div class="input-label">Servicio</div>
+			    <select ng-model="new_order.service_id">
+			      <option value="" disabled selected hidden>-- Selecciona --</option>
+			      <option ng-repeat="service in services | orderBy: 'description'" value="{{service.id}}">{{service.description}}</option>
+			    </select>
+			</label>
+			<input type="text" ng-model="new_order.customer_id"  ng-init="new_order.customer_id = customer_id" style="display:none" ng-if="!clientCanSee()">
+			<input type="text" ng-model="new_order.status"  ng-init="new_order.status = 1" style="display:none">
+			<button class="button button-assertive" ng-click="newOrder()">Aceptar</button>
+		</form>
+	</ion-content>
+</ion-modal-view>

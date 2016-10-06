@@ -13,7 +13,7 @@
 	      	<label class="item item-input" ng-show="!cambiarTipo">
 			    <span class="input-label">Tipo de vehículo</span>
 			    <span class="input-label">
-			    	<button class="button button-icon icon ion-locked" ng-click="showConfirm()"></button>
+			    	<button class="button button-icon icon ion-locked s-icon" ng-click="showConfirm()"></button>
 				    {{unit.vehicle_type.name}}
 			    </span>
 		  	</label>
@@ -21,7 +21,7 @@
 			    <div class="input-label">Tipo de vehículo</div>
 			    <select ng-model="unidad.vehicle_type_id" ng-change="vehicleTypeChange('form',unidad.vehicle_type_id)">
 			      <option value="" disabled selected hidden>-- Selecciona --</option>
-			      	<option ng-repeat="v in vehicles" value="{{v.id}}">{{v.name}}</option>
+			      <option ng-repeat="v in vehicles" value="{{v.id}}">{{v.name}}</option>
 			    </select>
 			</label>
 			<label class="item item-input">

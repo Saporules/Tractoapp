@@ -5,6 +5,7 @@ angular.module('starter.controllers', [
 ])
 //––––––––––––––– LoginCtrl –––––––––––––––//
 .controller('LoginCtrl', function($scope, $stateParams, $state, $localStorage, $ionicHistory, $ionicPopup, $auth, $ionicLoading, UserData) {
+  
   $ionicLoading.show();
   $auth.validateUser().then(function(resp){
     $state.go('app.resumen');
@@ -21,7 +22,7 @@ angular.module('starter.controllers', [
     $ionicLoading.show();
     $auth.submitLogin($scope.loginForm)
       .then(function(resp) {
-
+        console.log(resp)
         var str = localStorage.auth_headers;
         var pre_sesion = str.replace("-","_");
 
@@ -88,7 +89,6 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   }
   // La Plataforma ionic está lista
   $ionicPlatform.ready(function() {
-    
     console.log($scope.$sesion.user);
 
     $scope.nombre = $scope.$sesion.user.name+' '+$scope.$sesion.user.paternal_lastname+' '+$scope.$sesion.user.maternal_lastname;
@@ -96,22 +96,68 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
     $scope.paterno = $scope.$sesion.user.paternal_lastname;
     $scope.materno = $scope.$sesion.user.maternal_lastname;
     $scope.rol = $scope.$sesion.user.roles[0].name_alias;
-
-    if ($scope.$sesion.user.roles[0].name === 't_admin') {
-      $scope.rolId = 0;
-    }else if ($scope.$sesion.user.roles[0].name === 't_manager') {
-      $scope.rolId = 1;
-    }else if ($scope.$sesion.user.roles[0].name === 't_mechanic') {
-      $scope.rolId = 2;
-    }
- 
     $scope.correo = $scope.$sesion.user.email;
-    if($scope.$sesion.user.customer.name != null){
+
+    console.log($scope.rol);
+
+
+    switch($scope.$sesion.user.roles[0].name){
+      case 't_admin':
+        $scope.rolId = 0;
+        break;
+      case 't_manager':
+        $scope.rolId = 1;
+        break;
+      case 't_mechanic':
+        $scope.rolId = 2;
+        break;
+      case 'c_admin':
+        $scope.rolId = 3;
+        break;
+      case 'c_manager':
+        $scope.rolId = 4;
+        break;
+      case 'c_supervisor':
+        $scope.rolId = 5;
+        break;
+      case 'c_chief_of_staff':
+        $scope.rolId = 6;
+        break;
+      case 'c_mechanic':
+        $scope.rolId = 7;
+        break;
+      case 'c_operator':
+        $scope.rolId = 8;
+        break;
+      default:
+        $scope.rolId = 99;
+        break;
+    }
+
+    $scope.$sesion.rolId = $scope.rolId;
+    console.log('rolID: '+$scope.rolId)
+    // if ($scope.$sesion.user.roles[0].name === 't_admin') {
+    //   $scope.rolId = 0;
+    // }else if ($scope.$sesion.user.roles[0].name === 't_manager') {
+    //   $scope.rolId = 1;
+    // }else if ($scope.$sesion.user.roles[0].name === 't_mechanic') {
+    //   $scope.rolId = 2;
+    // }
+    
+    if($scope.rolId != 0){
+      if($scope.$sesion.user.customer.name != null){
+        $scope.cliente = $scope.$sesion.user.customer.name;
+        $scope.clienteId = $scope.$sesion.user.customer.id;
+      }else{
+        $scope.cliente = '';
+        $scope.clienteId = '';
+      }
+    }else if($scope.rolId == 0){
+      $scope.$sesion.user.customer = {};
+      $scope.$sesion.user.customer.name = 'Tractostation';
+      $scope.$sesion.user.customer.id = 0;
       $scope.cliente = $scope.$sesion.user.customer.name;
       $scope.clienteId = $scope.$sesion.user.customer.id;
-    }else{
-      $scope.cliente = '';
-      $scope.clienteId = '';
     }
 
 	});
@@ -126,6 +172,8 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
      console.log('Thank you for not eating my delicious ice cream cone');
     });
   };
+
+
 })//END AppCtrl
 
 //––––––––––––––– ConfigCtrl –––––––––––––––//
@@ -167,10 +215,10 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
 .controller('UnidadesCtrl',
   function($filter, $scope, $state, $stateParams, $localStorage,$ionicLoading,$ionicHistory, $ionicModal,UnitsData,VehicleTypes) {
   
-  console.log($ionicHistory.backView());
   $ionicLoading.show();
   $scope.$sesion = $localStorage;
   $scope.clientId = $scope.$sesion.user.customer.id;
+  $scope.rolId = $scope.$sesion.rolId;
   $scope.filtersOn = false;
   $scope.vehicles = {};//objeto que guarda los tipos de vehículo
   $scope.object = {};//objeto que se va a enviar contiene unidad y filtros
@@ -221,9 +269,9 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
     $scope.modal.remove();
   });
   $scope.$on('modal.hidden', function() {
-    $state.reload().then(function(){
-      console.log('reloading state');
-    });
+    // $state.reload().then(function(){
+    //   console.log('reloading state');
+    // });
   });
   $scope.$on('modal.removed', function() {
   });
@@ -273,6 +321,7 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   $scope.filts = [];//arreglo que contiene los filtros de la unidad
   $scope.$sesion = $localStorage;//variable de sesion
   $scope.clientId = $scope.$sesion.user.customer.id;
+  $scope.rolId = $scope.$sesion.rolId;
 
   var unidadId = $stateParams.unidadId;
   console.log(unidadId);
@@ -428,29 +477,38 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
 
 //––––––––––––––– OrdenesCtrl –––––––––––––––//
 .controller('OrdenesCtrl',
-  function($scope, $state, $stateParams, $localStorage,$ionicLoading,OrdersData, $ionicModal) {
+  function($scope, $state, $stateParams, $filter, $localStorage,$ionicLoading,OrdersData, $ionicModal) {
   $scope.$sesion = $localStorage;
+  $scope.rolId = $scope.$sesion.rolId;
+  $scope.userId = $scope.$sesion.id;
+  $scope.customer_id = $scope.$sesion.user.customer.id;
+  $scope.customer_name = $scope.$sesion.user.customer.name;
   $scope.filtrado = $stateParams.filtrado;
   $scope.existen = true;
   $scope.filteredOrders;
+  $scope.customers = [];
+  $scope.categories = [];
+  $scope.units = [];
+  $scope.services = [];
+  $scope.new_order = {};
+  $scope.orders = [];
 
   $ionicLoading.show();
 
-  OrdersData.getOrdersData().then(function(response){
+  OrdersData.getOrdersData($scope.userId).then(function(response){
     $scope.orders = response;
-    console.log(response);
+    // console.log(response);
     $scope.$sesion.ordenes = response;
     $ionicLoading.hide();
   }).catch(function(response){
     // console.log(response);
   });
 
-  $scope.goOrder = function(index){
-    // console.log(index);
-    // console.log($scope.orders[index]);
-    var the_objeto = $scope.orders[index];
-    var id = $scope.orders[index].id;
-    $state.go('app.orden', {ordenId:id,ordenIn:index});
+  $scope.goOrder = function(orderId){
+    $scope.singleOrder = $filter('filter')($scope.orders, {id:orderId});
+    OrdersData.setSingleOrder($scope.singleOrder[0]);
+    console.log($scope.singleOrder[0]);
+    $state.go('app.orden', {ordenId:orderId});
   }
 
   $scope.setTheClass = function(status){
@@ -524,7 +582,7 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
     }
   }
 
-  $ionicModal.fromTemplateUrl('templates/ordenes/modal.html', {
+  $ionicModal.fromTemplateUrl('templates/ordenes/modal-new.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
@@ -532,7 +590,46 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   });
   $scope.openModal = function() {
     $scope.modal.show();
+    $ionicLoading.show();
+    OrdersData.getSimpleCustomers().then(function(response){
+      $scope.customers = response;
+      // console.log($scope.customers)
+      $ionicLoading.hide();
+    }).catch(function(response){
+      // console.log(response);
+      $ionicLoading.hide();
+    });
+    OrdersData.getSimpleCategories().then(function(response){
+      $scope.categories = response;
+      // console.log($scope.categories)
+      $ionicLoading.hide();
+    }).catch(function(response){
+      // console.log(response);
+      $ionicLoading.hide();
+    });
+    if (!$scope.clientCanSee()){
+      console.log($scope.clientCanSee());
+      OrdersData.getSimpleUnits($scope.customer_id).then(function(response){
+        $scope.units = response;
+        console.log($scope.units)
+        $ionicLoading.hide();
+      }).catch(function(response){
+        console.log(response);
+        $ionicLoading.hide();
+      });
+    }else{
+      console.log($scope.clientCanSee());
+    }
+    OrdersData.getSimpleServices().then(function(response){
+      $scope.services = response;
+      // console.log($scope.services)
+      $ionicLoading.hide();
+    }).catch(function(response){
+      // console.log(response);
+      $ionicLoading.hide();
+    });
   };
+
   $scope.closeModal = function() {
     $scope.modal.hide();
   };
@@ -540,21 +637,279 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
     $scope.modal.remove();
   });
   $scope.$on('modal.hidden', function() {
-    $state.reload().then(function(){
-      console.log('reloading state');
-    });
+    // $state.reload().then(function(){
+    //   console.log('reloading state');
+    // });
   });
   $scope.$on('modal.removed', function() {
   });
 
+  $scope.canCreate = function(){
+    if ($scope.rolId == 2 ||  $scope.rolId == 7 || $scope.rolId == 8 || $scope.rolId == 99){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  $scope.clientCanSee = function(){
+    if ($scope.rolId == 3 || $scope.rolId == 4 || $scope.rolId == 5 || $scope.rolId == 6 || $scope.rolId == 7 || $scope.rolId == 8 || $scope.rolId == 99){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  $scope.customerChange = function(cusId){
+    OrdersData.getSimpleUnits(cusId).then(function(response){
+      $scope.units = response;
+      console.log($scope.units)
+      $ionicLoading.hide();
+    }).catch(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+    });
+  }
+
+  $scope.newOrder = function(){
+    $ionicLoading.show();
+    console.log($scope.new_order);
+    OrdersData.postNewOrder($scope.new_order).then(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+      $scope.closeModal();
+    }).catch(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+    });
+  }
+
 })//END OrdenCtrl
 //––––––––––––––– OrdenCtrl –––––––––––––––//
-.controller('OrdenCtrl', function($scope, $state, $stateParams, $localStorage,$ionicLoading) {
+.controller('OrdenCtrl', function(
+  $scope, $state, $stateParams, $localStorage,$ionicLoading, $ionicPopup, $ionicHistory, $ionicModal, OrdersData) {
+  
   $scope.$sesion = $localStorage;
-  var oi = $stateParams.ordenIn; // Order Index
-  // console.log("indice "+oi);
-  $scope.order = $scope.$sesion.ordenes[oi];
-  // console.log($scope.order);
+  $scope.rolId = $scope.$sesion.rolId;
+  
+  if ($ionicHistory.backView() != null) {
+    var sourceState = $ionicHistory.backView().stateId;
+  }else{
+    var sourceState = 'none';
+  }
+
+  var orderId = $stateParams.ordenId;
+  $scope.order = {};
+  //console.log($scope.order.id);
+
+  if(sourceState !== 'app.unidades'){
+    OrdersData.getSingleOrder(orderId).then(function(response){
+      $scope.order = response;
+      //console.log(response);
+    }).catch(function(response){
+      console.log(response);
+    });
+  }else{
+    $scope.order = UnitsData.getSingleUnit('none');
+    $scope.$watch('order', function() {
+      console.log('hey, order has changed!');
+    });
+  }
+
+
+  $scope.c_status = false;
+  $scope.c_client = false;
+  $scope.c_observ = false;
+  $scope.c_catego = false;
+  $scope.c_unit = false;
+  $scope.c_servic = false;
+  $scope.new_order = {};
+
+  // Se confirma la eliminación de la unidad
+  $scope.showDeleteConfirm = function() {
+   var confirmPopup = $ionicPopup.confirm({
+     title: '¿Deseas eliminar esta solicitud?',
+     template: 'Al eliminar la solicitud se borrará definitivamente'
+   });
+   confirmPopup.then(function(res) {
+     if(res) {
+      $scope.deleteOrder();
+      console.log('You are sure');
+     } else {
+       console.log('You are not sure');
+     }
+   });
+  };
+
+  $scope.canDelete = function(){
+    if ($scope.rolId == 2 || $scope.rolId == 7 || $scope.rolId == 8 || $scope.rolId == 99){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  $scope.canEdit = function(){
+    if ($scope.rolId == 2 || $scope.rolId == 7 || $scope.rolId == 8 || $scope.rolId == 99){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  $scope.canSee = function(){
+    if ($scope.rolId == 3 || $scope.rolId == 4 || $scope.rolId == 5 || $scope.rolId == 6 || $scope.rolId == 7 || $scope.rolId == 8 || $scope.rolId == 99){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  $scope.reloadData = function(){
+    console.log('reloadData');
+    OrdersData.getSingleOrder(orderId).then(function(response){
+      $scope.order = response;
+      $scope.$apply();
+      console.log($scope.unit);
+    }).catch(function(response){
+      console.log(response);
+    });
+  }
+
+  $scope.updateOrder = function(){
+    $ionicLoading.show();
+    console.log($scope.new_order);
+    OrdersData.updateOrder(orderId,$scope.new_order).then(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+      $scope.closeModal();
+    }).catch(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+    });
+  }
+
+  $scope.deleteOrder = function(){
+    $ionicLoading.show();
+    console.log($scope.object);
+    OrdersData.deleteOrder(orderId).then(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+      $state.go('app.ordenes');
+    }).catch(function(response){
+      console.log(response);
+      $ionicLoading.hide();
+    });
+  }
+
+  $ionicModal.fromTemplateUrl('templates/ordenes/modal-edit.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.openModal = function() {
+    $scope.modal.show();
+    $ionicLoading.show();
+
+    OrdersData.getSimpleCustomers().then(function(response){
+      $scope.customers = response;
+      // console.log($scope.customers)
+      $ionicLoading.hide();
+    }).catch(function(response){
+      // console.log(response);
+      $ionicLoading.hide();
+    });
+    OrdersData.getSimpleCategories().then(function(response){
+      $scope.categories = response;
+      // console.log($scope.categories)
+      $ionicLoading.hide();
+    }).catch(function(response){
+      // console.log(response);
+      $ionicLoading.hide();
+    });
+    OrdersData.getSimpleServices().then(function(response){
+      $scope.services = response;
+      // console.log($scope.services)
+      $ionicLoading.hide();
+    }).catch(function(response){
+      // console.log(response);
+      $ionicLoading.hide();
+    });
+  };
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  $scope.$on('modal.shown', function() {
+    console.log('modal shown');
+    $scope.$apply();
+  });
+  $scope.$on('modal.hidden', function() {
+  });
+  $scope.$on('modal.removed', function() {
+  });
+
+  $scope.setTheString = function(status){
+    switch (status) {
+      case "0":
+        return 'Vista general';
+        break;
+      case "1":
+        return 'Recepción de información';
+        break;
+      case "2":
+        return 'Servicio programado';
+        break;
+      case "3":
+        return 'Ingreso de la unidad';
+        break;
+      case "4":
+        return 'En reparación';
+        break;
+      case "5":
+        return 'Por finalizar';
+        break;
+      case "6":
+        return 'Finalizado';
+        break;
+      default:
+      break;
+    }
+  }
+  $scope.statuses = [
+    {id:1, name:'1. Recepción de información'},
+    {id:2, name:'2. Servicio programado'},
+    {id:3, name:'3. Ingreso de la unidad'},
+    {id:4, name:'4. En reparación'},
+    {id:5, name:'5. Por finalizar'},
+    {id:6, name:'6. Finalizado'}
+  ];
+
+  $scope.wantsChange = function(from){
+    switch(from){
+      case 'status':
+        $scope.c_status = !$scope.c_status;
+      break;
+      case 'client':
+        $scope.c_client = !$scope.c_client;
+      break;
+      case 'observ':
+        $scope.c_observ = !$scope.c_observ;
+      break;
+      case 'catego':
+        $scope.c_catego = !$scope.c_catego;
+      break;
+      case 'unit':
+        $scope.c_unit = !$scope.c_unit;
+      break;
+      case 'servic':
+        $scope.c_servic = !$scope.c_servic;
+      break;
+    }
+  }
+
 })//END OrdenCtrl
 
 //––––––––––––––– MiCuentaCtrl –––––––––––––––//
@@ -628,7 +983,9 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
 
 .controller('ResumenCtrl', function($scope, $stateParams, $state, $localStorage, $ionicLoading, UnitsData, OrdersData, $filter) {
   $ionicLoading.show();
-  OrdersData.getOrdersData().then(function(response){
+  $scope.$sesion = $localStorage;
+  $scope.userId = $scope.$sesion.id;
+  OrdersData.getOrdersData($scope.userId).then(function(response){
     $scope.ordenes = response;
     // console.log("tamaño ordenes: "+$scope.ordenes.length);
     $scope.ri = $filter('filter')($scope.ordenes, {status:1});

@@ -1,0 +1,108 @@
+<ion-modal-view view-title="Nueva Solicitud">
+	<ion-header-bar class="bar bar-header bar-dark">
+	<h1 class="title">Editar Solicitud</h1>
+    <div class="buttons" side="right">
+      <button id="add-new"
+      	class="button button-icon icon ion-ios-close-empty"
+      	ng-click="closeModal()"
+      	ng-if="rolId != 2"></button>
+    </div>
+  </ion-header-bar>
+	<ion-content>
+		<form class="list">
+			<div class="item item-divider orange-box" ng-if="canSee()">
+	        	{{order.customer.name}}
+	      	</div>
+			<label class="item item-input" ng-if="!c_status">
+			    <span class="input-label">Estatus</span>
+			    <span class="input-label">
+			    	<button class="button button-icon icon ion-edit s-icon" ng-click="wantsChange('status')"></button>
+				    {{setTheString(order.status)}}
+			    </span>
+		  	</label>
+			<label class="item item-input item-select" ng-if="c_status">
+			    <div class="input-label">Estatus</div>
+			    <button class="button button-icon icon ion-close s-icon" ng-click="wantsChange('status')"></button>
+			    <select ng-model="new_order.status" >
+			    	<option value="" disabled selected hidden>-- Selecciona --</option>
+			    	<option ng-repeat="status in statuses" value="{{status.id}}">{{status.name}}</option>
+			    </select>
+			</label>
+			<div id="client-container" ng-if="!canSee()">
+			<label class="item item-input" ng-if="!c_client">
+			    <span class="input-label">Cliente</span>
+			    <span class="input-label">
+			    	<button class="button button-icon icon ion-edit s-icon" ng-click="wantsChange('client')" ng-if="canEdit(rolId)"></button>
+				    {{order.customer.name}}
+			    </span>
+		  	</label>
+			<label class="item item-input item-select" ng-if="c_client">
+			    <div class="input-label">Cliente</div>
+			    <button class="button button-icon icon ion-close s-icon" ng-click="wantsChange('client')"></button>
+			    <select ng-model="new_order.customer_id" ng-change="customerChange(new_order.customer_id)" ng-disabled="rolId ==2">
+			    	<option value="" disabled selected hidden>-- Selecciona --</option>
+			      	<option ng-repeat="customer in customers | orderBy: 'name'" value="{{customer.id}}">{{customer.name}}</option>
+			    </select>
+			</label>
+			</div><!-- #client-container -->
+			<label class="item item-input" ng-if="!c_observ">
+			    <span class="input-label">Observaciones</span>
+			    <span class="input-label">
+			    	<button class="button button-icon icon ion-edit s-icon" ng-click="wantsChange('client')" ng-if="canEdit(rolId)"></button>
+				    {{order.observations}}
+			    </span>
+		  	</label>
+			<label class="item item-input" ng-if="c_observ">
+			    <span class="input-label">Observaciones</span>
+			    <input type="text" ng-model="new_order.observations" ng-init="new_order.observations = order.observations" ng-disabled="rolId ==2" >
+		  	</label>
+		  	<label class="item item-input" ng-if="!c_catego">
+			    <span class="input-label">Categoría</span>
+			    <span class="input-label">
+			    	<button class="button button-icon icon ion-edit s-icon" ng-click="wantsChange('catego')" ng-if="canEdit(rolId)"></button>
+				    {{order.category.name}}
+			    </span>
+		  	</label>
+			<label class="item item-input item-select" ng-if="c_catego">
+			    <div class="input-label">Categoría</div>
+			    <button class="button button-icon icon ion-close s-icon" ng-click="wantsChange('catego')"></button>
+			    <select ng-model="new_order.category_id" ng-disabled="rolId ==2">
+			      <option value="" disabled selected hidden>-- Selecciona --</option>
+			      <option ng-repeat="category in categories | orderBy: 'name'" value="{{category.id}}">{{category.name}}</option>
+			    </select>
+			</label>
+			<label class="item item-input" ng-if="!c_unit">
+			    <span class="input-label">Unidad</span>
+			    <span class="input-label">
+			    	<button class="button button-icon icon ion-edit s-icon" ng-click="wantsChange('unit')" ng-if="canEdit(rolId)"></button>
+				    {{order.unit.economic_number}}
+			    </span>
+		  	</label>
+			<label class="item item-input item-select" ng-if="c_unit">
+			    <div class="input-label">Unidad</div>
+			    <button class="button button-icon icon ion-close s-icon" ng-click="wantsChange('unit')"></button>
+			    <select ng-model="new_order.unit_id" ng-disabled="rolId ==2">
+			      <option value="" disabled selected hidden>-- Selecciona --</option>
+			      <option ng-repeat="unit in units | orderBy: 'economic_number'" value="{{unit.id}}">{{unit.economic_number}}</option>
+			    </select>
+			</label>
+			<label class="item item-input" ng-if="!c_servic">
+			    <span class="input-label">Servicio</span>
+			    <span class="input-label">
+			    	<button class="button button-icon icon ion-edit s-icon" ng-click="wantsChange('servic')" ng-if="canEdit(rolId)"></button>
+				    {{order.service.description}}
+			    </span>
+		  	</label>
+			<label class="item item-input item-select" ng-if="c_servic">
+			    <div class="input-label">Servicio</div>
+			    <button class="button button-icon icon ion-close s-icon" ng-click="wantsChange('servic')"></button>
+			    <select ng-model="new_order.service_id" ng-disabled="rolId ==2">
+			      <option value="" disabled selected hidden>-- Selecciona --</option>
+			      <option ng-repeat="service in services | orderBy: 'description'" value="{{service.id}}">{{service.description}}</option>
+			    </select>
+			</label>
+			<input type="text" ng-model="new_order.status"  ng-init="new_order.status = 1" style="display:none">
+			<button class="button button-assertive" ng-click="updateOrder()">Aceptar</button>
+		</form>
+	</ion-content>
+</ion-modal-view>

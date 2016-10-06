@@ -6,7 +6,7 @@
 body * {
   font-family: 'ProximaNova', Helvetica, Arial;
 }
-body,ion-side-menus,ion-nav-view.the-darkness, ion-nav-view, ion-view,ion-content{
+body,ion-side-menus, ion-side-menu-content, ion-nav-view.the-darkness, ion-nav-view, ion-view,ion-content{
   background: #434343;
   color:#fff;
 }
@@ -56,11 +56,11 @@ form.list.tracto-modal {
   height: 34px;
   margin-top: 6px;
 }
-button.button.button-icon.icon.ion-locked {
+button.button.button-icon.icon.s-icon {
   min-height: auto;
   height: 16px;
 }
-button.button.button-icon.icon.ion-locked:before {
+button.button.button-icon.icon.s-icon:before {
   font-size: 15px;
   line-height: 15px;
 }
@@ -273,7 +273,7 @@ ion-view#login .scroll {
   width: 50px;
   display: flex;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   justify-content: center;
   border-radius: 200px;
   margin-left: -4px;
@@ -289,6 +289,7 @@ ion-view#login .scroll {
 }
 .oi-des p{
   margin:0;
+  font-size: 16px
 }
 .oi-cont-0{
 border-color:#F58B10;
@@ -334,35 +335,6 @@ background-color:#FD2727;
 .oi-cont-6 .oi-num{
   background-color:#0FBE15; 
 }
-
-/*#resumen .item.item-body p,#resumen .item.item-body h2{
-  margin-top: 0;
-}
-#resumen .status .col-25 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: .2em;
-}
-#resumen .status .col-25:after {
-  content: '';
-  display: flex;
-  width: 50%;
-  height: 14px;
-}
-.status .percentage-bar{
-  width: 100%;
-  height: 20px;
-  background: #eee;
-  margin: 1em 0;
-}
-.status .percentage-item {height:100%}
-.status .recepcion-bar,.status .recepcion:after{background: #FD2727}
-.status .servicio-bar,.status .servicio:after{background: #F58B10}
-.status .ingreso-bar,.status .ingreso:after{background: #FFC810}
-.status .repara-bar,.status .repara:after{background: #DAFD15}
-.status .porfin-bar,.status .porfin:after{background: #9EE31C}
-.status .final-bar,.status .final:after{background: #0FBE15}*/
 
 /* ORDENES
 ––––––––––––––––––––––––––––*/

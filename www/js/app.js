@@ -62,6 +62,7 @@ angular.module('starter', [
   })
 
   .state('app.config', {
+    cache:false,
     url: '/config',
     views: {
       'menuContent': {
@@ -72,6 +73,7 @@ angular.module('starter', [
   })
 
   .state('app.resumen', {
+    cache:false,
     url: '/resumen',
     views: {
       'menuContent': {
@@ -90,6 +92,7 @@ angular.module('starter', [
     }
   })
   .state('app.unidades', {
+    cache:false,
     url: '/unidades',
     views: {
       'menuContent': {
@@ -112,6 +115,7 @@ angular.module('starter', [
     }
   })
   .state('app.miCuenta', {
+    cache:false,
     url: '/miCuenta',
     views: {
       'menuContent': {
@@ -121,6 +125,7 @@ angular.module('starter', [
     }
   })
   .state('app.ordenes', {
+    cache:false,
     url: '/ordenes/:filtrado',
     views: {
       'menuContent': {
@@ -130,14 +135,14 @@ angular.module('starter', [
     }
   })
   .state('app.orden', {
-    url: '/ordenes/:ordenId/:ordenIn',
+    cache:false,
+    url: '/orden/:ordenId',
     views: {
       'menuContent': {
         templateUrl: 'templates/ordenes/orden.html',
         controller: 'OrdenCtrl',
         params: {
-          ordenId: '',
-          ordenIn: ''
+          ordenId: ''
         }
       }
     }

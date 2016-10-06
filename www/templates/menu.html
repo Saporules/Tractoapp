@@ -12,11 +12,12 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left" id="left-menu">
+  <ion-side-menu side="left" id="left-menu" expose-aside-when="large">
     <ion-content>
       <div class="menu-header">
         <h1>{{nombre}}</h1>
         <h3><strong>{{correo}}</strong></h3>
+        <p>{{rol}}</p>
         <p>{{cliente}}</p>
       </div>
       <ion-list class="custom-list">
@@ -32,10 +33,10 @@
           <label>Unidades</label>
           <i class="ion-chevron-right"></i>
         </ion-item>
-        <!--ion-item menu-close ui-sref="app.rescate" ui-sref-active="current">
+        <!-- <ion-item menu-close ui-sref="app.rescate" ui-sref-active="current">
           <label>Rescate Carretero</label>
           <i class="ion-chevron-right"></i>
-        </ion-item-->
+        </ion-item> -->
         <ion-item menu-close href="#/app/miCuenta" ui-sref-active="current">
           <label>Mi Cuenta</label>
           <i class="ion-chevron-right"></i>
@@ -48,6 +49,7 @@
       <div class="tracto-info">
         <img src="img/logo.png" id="logo-menu">
         <p>®2016 Todos los derechos reservados</p>
+        <label style="font-size:11px;color:#999">V. 0.0.6</label>
       </div>
     </ion-content>
   </ion-side-menu>

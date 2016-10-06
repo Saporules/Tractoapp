@@ -11,18 +11,20 @@ angular.module('starter')
     }
 })
 .factory('UnitsData', function($http){
-    var url = 'https://production-tractostation.herokuapp.com/api/v1/customer/units/';//production
-    // var url = 'https://stage-tractostation.herokuapp.com/api/v1/customer/units/';//stage
+    var url = 'https://production-tractostation.herokuapp.com/api/v1/users/';//production
+    // var url = 'https://stage-tractostation.herokuapp.com/api/v1/users/';//stage
     var url2 = 'https://production-tractostation.herokuapp.com/api/v1/units/';//production
     // var url2 = 'https://stage-tractostation.herokuapp.com/api/v1/units/';//stage
+
     var cusId = localStorage.getItem('ngStorage-custId');
+    var usrId = localStorage.getItem('ngStorage-id');
     var units = {};
     var singleUnit = {};
 
     return {
         getUnitsData: function(){
             console.log('getUnitsData()');
-            return $http.get(url+cusId).then(function(response){
+            return $http.get(url+usrId+'/units/').then(function(response){
                 var data = response.data;
                 //do something exciting with the data
                 return data;
@@ -30,7 +32,7 @@ angular.module('starter')
         },
         getUnitsLength: function(){
             console.log('getUnitsLength()');
-            return $http.get(url).then(function(response){
+            return $http.get(url+usrId+'/units/').then(function(response){
                 var data = response.data.length;
                 //do something exciting with the data
                 return data;
@@ -103,15 +105,28 @@ angular.module('starter')
     }
 })
 .factory('OrdersData', function($http){
-    var url = 'https://production-tractostation.herokuapp.com/api/v1/customer/orders/';//production
-    // var url = 'https://stage-tractostation.herokuapp.com/api/v1/customer/orders/';//stage
+    var url = 'https://production-tractostation.herokuapp.com/api/v1/users/';//production
+    // var url = 'https://stage-tractostation.herokuapp.com/api/v1/users/';//stage
+    var urlCat = 'https://production-tractostation.herokuapp.com/api/v1/categories/';//production
+    // var urlCat = 'https://stage-tractostation.herokuapp.com/api/v1/categories/';//stage
+    var urlCus = 'https://production-tractostation.herokuapp.com/api/v1/customers/';//production
+    // var urlCus = 'https://stage-tractostation.herokuapp.com/api/v1/customers/';//stage
+    var urlSer = 'https://production-tractostation.herokuapp.com/api/v1/services/';//production
+    // var urlSer = 'https://stage-tractostation.herokuapp.com/api/v1/services/';//stage
+    var urlOrder = 'https://production-tractostation.herokuapp.com/api/v1/orders/';//production
+    // var urlOrder = 'https://stage-tractostation.herokuapp.com/api/v1/orders/';//stage
+
+    
     var cusId = localStorage.getItem('ngStorage-custId');
+    var usrId = localStorage.getItem('ngStorage-id');
+    console.log(usrId);
     var singleOrder = {};
 
     return {
-        getOrdersData: function(){
-            return $http.get(url+cusId).then(function(response){
+        getOrdersData: function(uid){
+            return $http.get(url+uid+'/orders/').then(function(response){
                 var data = response.data;
+                console.log(data);
                 //do something exciting with the data
                 return data;
             });
@@ -119,8 +134,82 @@ angular.module('starter')
         setSingleOrder: function(obj){
             singleOrder = obj;
         },
-        getSingleOrder: function(){
-            return singleOrder;
+        getSingleOrder: function(orderId){
+            console.log('getSingleUnit()');
+
+            if (orderId === 'none') {
+                console.log('none');
+                console.log(singleOrder);
+                return singleOrder;
+            }else {
+                return $http.get(url+usrId+'/orders/'+orderId).then(function(response){
+                    singleOrder = response.data;
+                    console.log(orderId);
+                    console.log(singleOrder);
+                    return singleOrder;
+                });
+            }
+            console(singleOrder);
+            
+        },
+        getSimpleUnits: function(customerId){
+            return $http.get(url+usrId+'/simple_units/'+customerId).then(function(response){
+                var data = response.data;
+                //do something exciting with the data
+                return data;
+            });
+        },
+        getSimpleServices: function(){
+            return $http.get(urlSer).then(function(response){
+                var data = response.data;
+                //do something exciting with the data
+                return data;
+            });
+        },
+        getSimpleCategories: function(){
+            return $http.get(urlCat).then(function(response){
+                var data = response.data;
+                //do something exciting with the data
+                return data;
+            });  
+        },
+        getSimpleCustomers: function(){
+            return $http.get(url+usrId+'/customers/').then(function(response){
+                var data = response.data;
+                //do something exciting with the data
+                return data;
+            });
+        },
+        postNewOrder: function(obj){
+            console.log('postNewOrder()');
+            return $http.post(url+usrId+'/orders/',obj).then(function(response){
+                console.log('lo logramos!');
+                console.log(response);
+                var data = response.data;
+                return data;
+            }).catch(function(response){
+                console.log('no lo logramos :(');
+                console.log(response);
+            });
+        },
+        updateOrder: function(orderId,obj){
+            return $http.patch(url+usrId+'/orders/'+orderId,obj).then(function(response){
+                console.log('logramos hacer put!');
+                console.log(response)
+            }).catch(function(){
+                console.log('no lo logramos :(');
+                console.log(response)
+            });
+        },
+        deleteOrder: function(orderId){
+            console.log('deleteUnit()');
+            return $http.delete(url+usrId+'/orders/'+orderId).then(function(response){
+                console.log('logramos borrar!');
+                console.log(response);
+            }).catch(function(){
+                console.log('no lo logramos borrar :(');
+                console.log(response);
+            });
         }
     }
 })
@@ -148,7 +237,6 @@ angular.module('starter')
     return {
         getUserData: function(id,uid){
             console.log('getUserData()');
-            console.log(id);
             console.log(uid);
             var ops = {
                 method: 'GET',
