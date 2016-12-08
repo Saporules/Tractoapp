@@ -23,7 +23,6 @@ angular.module('starter')
 
     return {
         getUnitsData: function(){
-            console.log('getUnitsData()');
             return $http.get(url+usrId+'/units/').then(function(response){
                 var data = response.data;
                 //do something exciting with the data
@@ -31,7 +30,6 @@ angular.module('starter')
             });
         },
         getUnitsLength: function(){
-            console.log('getUnitsLength()');
             return $http.get(url+usrId+'/units/').then(function(response){
                 var data = response.data.length;
                 //do something exciting with the data
@@ -39,27 +37,21 @@ angular.module('starter')
             });
         },
         setUnits: function(obj){
-            console.log('setUnits()');
             units = obj;
         },
         getUnits: function(){
-            console.log('getUnits()');
             return units;
         },
         setSingleUnit: function(obj){
-            console.log('setSingleUnit()');
             singleUnit = obj;
-            console.log(singleUnit);
         },
         getSingleUnit: function(unitId){
-            console.log('getSingleUnit()');
 
             if (unitId === 'none') {
                 for(i=0; i < singleUnit.unit_filters.length ;i++){
                     singleUnit.unit_filters[i].last_change = new Date(singleUnit.unit_filters[i].last_change);
                     singleUnit.unit_filters[i].next_change = new Date(singleUnit.unit_filters[i].next_change);
                 }
-                console.log(singleUnit);
                 return singleUnit;
             }else {
                 return $http.get(url2+unitId).then(function(response){
@@ -68,7 +60,6 @@ angular.module('starter')
                         singleUnit.unit_filters[i].last_change = new Date(singleUnit.unit_filters[i].last_change);
                         singleUnit.unit_filters[i].next_change = new Date(singleUnit.unit_filters[i].next_change);
                     }
-                    console.log(singleUnit);
                     return singleUnit;
                 });
             }
@@ -76,30 +67,17 @@ angular.module('starter')
         },
         postNewUnit: function(obj){
             return $http.post(url2,obj).then(function(response){
-                console.log('lo logramos!');
-                console.log(response)
             }).catch(function(response){
-                console.log('no lo logramos :(');
-                console.log(response)
             });
         },
         updateUnit: function(unitId,obj){
             return $http.patch(url2+unitId,obj).then(function(response){
-                console.log('logramos hacer put!');
-                console.log(response)
             }).catch(function(){
-                console.log('no lo logramos :(');
-                console.log(response)
             });
         },
         deleteUnit: function(unitId){
-            console.log('deleteUnit()');
             return $http.delete(url2+unitId).then(function(response){
-                console.log('logramos borrar!');
-                console.log(response);
             }).catch(function(){
-                console.log('no lo logramos borrar :(');
-                console.log(response);
             });
         }
     }
@@ -118,7 +96,7 @@ angular.module('starter')
 
     
     var cusId = localStorage.getItem('ngStorage-custId');
-    // var usrId = localStorage.getItem('ngStorage-id');
+    var usrId = localStorage.getItem('ngStorage-id');
     
     var allOrders = [];
     var singleOrder = {};
@@ -128,11 +106,9 @@ angular.module('starter')
             allOrders = arr;
         },
         getOrdersData: function(uid,time){
-            console.log('getOrdersData('+uid+','+time+')');
             if (time === 'first'){
                 return $http.get(url+uid+'/orders/').then(function(response){
                     var data = response.data;
-                    console.log(data);
                     //do something exciting with the data
                     return data;
                 });
@@ -141,21 +117,15 @@ angular.module('starter')
             }
         },
         setSingleOrder: function(obj){
-            console.log('setSingleOrder('+obj.id+')');
             singleOrder = obj;
         },
         getSingleOrder: function(orderId,uid){
-            console.log('getSingleOrder('+orderId+','+uid+')');
 
             if (orderId === 'none') {
-                console.log('none');
-                console.log(singleOrder);
                 return singleOrder;
             }else {
                 return $http.get(url+uid+'/orders/'+orderId).then(function(response){
                     singleOrder = response.data;
-                    // console.log(orderId);
-                    console.log(singleOrder);
                     return singleOrder;
                 });
             }
@@ -191,34 +161,20 @@ angular.module('starter')
             });
         },
         postNewOrder: function(obj){
-            console.log('postNewOrder()');
             return $http.post(url+usrId+'/orders/',obj).then(function(response){
-                console.log('lo logramos!');
-                console.log(response);
                 var data = response.data;
                 return data;
             }).catch(function(response){
-                console.log('no lo logramos :(');
-                console.log(response);
             });
         },
         updateOrder: function(orderId,obj){
             return $http.patch(url+usrId+'/orders/'+orderId,obj).then(function(response){
-                console.log('logramos hacer put!');
-                console.log(response)
             }).catch(function(){
-                console.log('no lo logramos :(');
-                console.log(response)
             });
         },
         deleteOrder: function(orderId){
-            console.log('deleteUnit()');
             return $http.delete(url+usrId+'/orders/'+orderId).then(function(response){
-                console.log('logramos borrar!');
-                console.log(response);
             }).catch(function(){
-                console.log('no lo logramos borrar :(');
-                console.log(response);
             });
         }
     }
@@ -230,11 +186,9 @@ angular.module('starter')
     var filters = {};
     return {
         getVehicleType: function(){
-            console.log('getVehicleType()');
              return $http.get(url).then(function(response){
                 var data = response.data;
                 //do something exciting with the data
-                console.log(data);
                 return data;
             });
         }
@@ -246,8 +200,6 @@ angular.module('starter')
     // var url_u = 'https://stage-tractostation.herokuapp.com/api/v1/users/';//stage
     return {
         getUserData: function(id,uid){
-            console.log('getUserData()');
-            console.log(uid);
             var ops = {
                 method: 'GET',
                 url: url_u+id,
@@ -262,7 +214,6 @@ angular.module('starter')
             });
         },
         getUserLength: function(id,uid){
-            console.log('getUserLength()');
             var ops = {
                 method: 'GET',
                 url: url_u+id,

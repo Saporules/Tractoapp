@@ -4,7 +4,8 @@ angular.module('starter.controllers', [
   'ng-token-auth'
 ])
 //––––––––––––––– LoginCtrl –––––––––––––––//
-.controller('LoginCtrl', function($scope, $stateParams, $state, $localStorage, $ionicHistory, $ionicPopup, $auth, $ionicLoading, UserData) {
+.controller('LoginCtrl',
+  function($scope, $stateParams, $state, $localStorage, $ionicHistory, $ionicPopup, $auth, $ionicLoading, UserData) {
   
   $ionicLoading.show();
   $auth.validateUser().then(function(resp){
@@ -68,7 +69,8 @@ angular.module('starter.controllers', [
 
 //––––––––––––––– AppCtrl –––––––––––––––//
 .controller('AppCtrl',
-function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $localStorage){
+  function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $state, $localStorage){
+  
   $auth.validateUser().then(function(resp){
     //nothing happens
   }).catch(function(resp){
@@ -97,52 +99,23 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
     $scope.materno = $scope.$sesion.user.maternal_lastname;
     $scope.rol = $scope.$sesion.user.roles[0].name_alias;
     $scope.correo = $scope.$sesion.user.email;
-
     console.log($scope.rol);
 
-
     switch($scope.$sesion.user.roles[0].name){
-      case 't_admin':
-        $scope.rolId = 0;
-        break;
-      case 't_manager':
-        $scope.rolId = 1;
-        break;
-      case 't_mechanic':
-        $scope.rolId = 2;
-        break;
-      case 'c_admin':
-        $scope.rolId = 3;
-        break;
-      case 'c_manager':
-        $scope.rolId = 4;
-        break;
-      case 'c_supervisor':
-        $scope.rolId = 5;
-        break;
-      case 'c_chief_of_staff':
-        $scope.rolId = 6;
-        break;
-      case 'c_mechanic':
-        $scope.rolId = 7;
-        break;
-      case 'c_operator':
-        $scope.rolId = 8;
-        break;
-      default:
-        $scope.rolId = 99;
-        break;
+      case 't_admin': $scope.rolId = 0;break;
+      case 't_manager': $scope.rolId = 1;break;
+      case 't_mechanic': $scope.rolId = 2;break;
+      case 'c_admin': $scope.rolId = 3;break;
+      case 'c_manager': $scope.rolId = 4;break;
+      case 'c_supervisor': $scope.rolId = 5;break;
+      case 'c_chief_of_staff': $scope.rolId = 6;break;
+      case 'c_mechanic': $scope.rolId = 7;break;
+      case 'c_operator': $scope.rolId = 8;break;
+      default: $scope.rolId = 99;break;
     }
 
     $scope.$sesion.rolId = $scope.rolId;
     console.log('rolID: '+$scope.rolId)
-    // if ($scope.$sesion.user.roles[0].name === 't_admin') {
-    //   $scope.rolId = 0;
-    // }else if ($scope.$sesion.user.roles[0].name === 't_manager') {
-    //   $scope.rolId = 1;
-    // }else if ($scope.$sesion.user.roles[0].name === 't_mechanic') {
-    //   $scope.rolId = 2;
-    // }
     
     if($scope.rolId != 0){
       if($scope.$sesion.user.customer.name != null){
@@ -159,25 +132,13 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
       $scope.cliente = $scope.$sesion.user.customer.name;
       $scope.clienteId = $scope.$sesion.user.customer.id;
     }
-
 	});
-
-  $scope.showAlert = function() {
-    var alertPopup = $ionicPopup.alert({
-     title: 'Don\'t eat that!',
-     template: $scope.nombre+' '+$scope.rol
-    });
-
-    alertPopup.then(function(res) {
-     console.log('Thank you for not eating my delicious ice cream cone');
-    });
-  };
-
 
 })//END AppCtrl
 
 //––––––––––––––– ConfigCtrl –––––––––––––––//
-.controller('ConfigCtrl', function($scope, $state, $stateParams, $localStorage,$ionicHistory, $ionicLoading, $auth, UserData) {
+.controller('ConfigCtrl',
+  function($scope, $state, $stateParams, $localStorage,$ionicHistory, $ionicLoading, $auth, UserData) {
   $scope.$sesion = $localStorage;
   $scope.signOutClick = function() {
     console.log('botón de cerrar Sesion');
@@ -701,9 +662,10 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   }
 
 })//END OrdenCtrl
+
 //––––––––––––––– OrdenCtrl –––––––––––––––//
-.controller('OrdenCtrl', function(
-  $scope, $state, $stateParams, $localStorage,$ionicLoading, $ionicPopup, $ionicHistory, $ionicModal, OrdersData) {
+.controller('OrdenCtrl', 
+  function($scope, $state, $stateParams, $localStorage,$ionicLoading, $ionicPopup, $ionicHistory, $ionicModal, OrdersData) {
   
   $scope.$sesion = $localStorage;
   $scope.rolId = $scope.$sesion.rolId;
@@ -931,7 +893,8 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
 })//END OrdenCtrl
 
 //––––––––––––––– MiCuentaCtrl –––––––––––––––//
-.controller('MiCuentaCtrl', function($scope, $state, $stateParams, $localStorage, $ionicLoading, $auth) {
+.controller('MiCuentaCtrl',
+  function($scope, $state, $stateParams, $localStorage, $ionicLoading, $auth) {
   $scope.$sesion = $localStorage;
   $scope.signOutClick = function() {
     $ionicLoading.show();
@@ -947,10 +910,9 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   };
 })//END MiCuentaCtrl
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
-
-.controller('RescateCtrl', function($scope, $state, NgMap, $ionicLoading, $ionicModal){
+//––––––––––––––– RescateCtrl –––––––––––––––//
+.controller('RescateCtrl',
+  function($scope, $state, NgMap, $ionicLoading, $ionicModal){
   $scope.positionSelected=false;
   //$ionicLoading.show();
   $scope.message = 'You can not hide. :)';
@@ -997,9 +959,10 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
   $scope.$on('modal.removed', function() {
     // Execute action
   });
-})
+})//END RescateCtrl
 
-.controller('ResumenCtrl', function($scope, $stateParams, $state, $localStorage, $ionicLoading, UnitsData, OrdersData, $filter) {
+.controller('ResumenCtrl',
+  function($scope, $stateParams, $state, $localStorage, $ionicLoading, UnitsData, OrdersData, $filter) {
   $ionicLoading.show();
   $scope.$sesion = $localStorage;
   $scope.userId = $scope.$sesion.id;
@@ -1026,5 +989,5 @@ function($scope, $auth, $ionicModal, $ionicPopup, $timeout, $ionicPlatform, $sta
     // console.log(response);
   });
 
+});//END Resumen
 
-});
